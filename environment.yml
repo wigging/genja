@@ -2,3 +2,5 @@ name: staticgen
 
 dependencies:
   - python
+  - flake8
+  - markdown
