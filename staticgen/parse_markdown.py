@@ -17,3 +17,6 @@ def parse_markdown(file):
     print(file)
     print(meta)
     print(html)
+
+    with open(f'htmlcontent/{file.stem}.html', 'w') as f:
+        f.write(html)
