@@ -4,3 +4,4 @@ dependencies:
   - python
   - flake8
   - markdown
+  - jinja2
