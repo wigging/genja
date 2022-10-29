@@ -1,25 +1,21 @@
-import markdown
+import multiprocessing as mp
 from pathlib import Path
+from parse_markdown import parse_markdown
 
-md = markdown.Markdown(extensions=['meta'])
 
-with open('content/example.md', 'r') as file:
-    text = file.read()
-    html = md.convert(text)
-    meta = md.Meta
+def main():
+    path = Path('content')
+    for file in path.iterdir():
+        parse_markdown(file)
 
-print(meta)
-print(html)
 
-path = Path('content')
+def main_parallel():
+    path = Path('content')
+    n = mp.cpu_count()
+    with mp.Pool(n) as p:
+        p.map(parse_markdown, path.iterdir())
 
-for f in path.iterdir():
-    print(f)
 
-    with open(f, 'r') as file:
-        text = file.read()
-        html = md.convert(text)
-        meta = md.Meta
-
-    print(meta)
-    print(html)
+if __name__ == '__main__':
+    # main()
+    main_parallel()
