@@ -32,7 +32,7 @@ def main():
     env = Environment(loader=FileSystemLoader('website'))
     template = env.get_template('template.html')
 
-    path = Path('mdcontent')
+    path = Path('content')
     for file in path.iterdir():
         parse_markdown(file, md, template)
 
