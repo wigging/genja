@@ -1,5 +1,5 @@
 """
-Static site generator.
+HTML page generator from markdown files.
 """
 
 import markdown
@@ -20,7 +20,7 @@ def parse_markdown(file, md, template):
 
     page = template.render(title=meta['title'][0], content=html)
 
-    with open(f'htmlcontent/{file.stem}.html', 'w') as f:
+    with open(f'website/{file.stem}.html', 'w') as f:
         f.write(page)
 
     md.reset()
@@ -29,7 +29,7 @@ def parse_markdown(file, md, template):
 def main():
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
-    env = Environment(loader=FileSystemLoader('htmlcontent'))
+    env = Environment(loader=FileSystemLoader('website'))
     template = env.get_template('template.html')
 
     path = Path('mdcontent')
