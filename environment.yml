@@ -1,7 +1,8 @@
-name: staticgen
+name: genger
 
 dependencies:
   - python
   - flake8
   - markdown
   - jinja2
+  - ipython
