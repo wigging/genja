@@ -2,16 +2,13 @@
 HTML page generator from markdown files.
 """
 
+import argparse
 import markdown
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
-CONTENT_PATH = 'content'
-SITE_PATH = 'website'
-TEMPLATE_FILE = 'template.html'
 
-
-def parse_markdown(file, md, template):
+def parse_markdown(file, md, template, output):
     """
     Parse the content of the markdown files and write to HTML.
     """
@@ -26,7 +23,7 @@ def parse_markdown(file, md, template):
 
     page = template.render(title=meta['title'][0], content=html)
 
-    with open(f'{SITE_PATH}/{file.stem}.html', 'w') as f:
+    with open(f'{output}/{file.stem}.html', 'w') as f:
         f.write(page)
 
     md.reset()
@@ -36,18 +33,23 @@ def main():
     """
     Main driver to run the program.
     """
-    print(f'\nContent path: {CONTENT_PATH}')
-    print(f'Site path: {SITE_PATH}')
-    print(f'Template file: {TEMPLATE_FILE}')
+    parser = argparse.ArgumentParser(description='Generate HTML from markdown')
+    parser.add_argument('input', help='markdown directory')
+    parser.add_argument('output', help='html directory')
+    args = parser.parse_args()
+
+    print(f'\nMarkdown directory: {args.input}')
+    print(f'HTML directory: {args.output}')
+    print(f'Template file: {args.input}/template.html')
     print('Generate HTML files ... ', end='')
 
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
-    env = Environment(loader=FileSystemLoader(SITE_PATH))
-    template = env.get_template(TEMPLATE_FILE)
+    env = Environment(loader=FileSystemLoader(args.output))
+    template = env.get_template('template.html')
 
-    path = Path(CONTENT_PATH)
+    path = Path(args.input)
     for file in path.iterdir():
-        parse_markdown(file, md, template)
+        parse_markdown(file, md, template, args.output)
 
     print('Done')
