@@ -6,9 +6,15 @@ import markdown
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
+CONTENT_PATH = 'content'
+SITE_PATH = 'website'
+TEMPLATE_FILE = 'template.html'
+
 
 def parse_markdown(file, md, template):
-
+    """
+    Parse the content of the markdown files and write to HTML.
+    """
     if file.suffix != '.md':
         return
 
@@ -20,19 +26,22 @@ def parse_markdown(file, md, template):
 
     page = template.render(title=meta['title'][0], content=html)
 
-    with open(f'website/{file.stem}.html', 'w') as f:
+    with open(f'{SITE_PATH}/{file.stem}.html', 'w') as f:
         f.write(page)
 
     md.reset()
 
 
 def main():
+    """
+    Main driver to run the program.
+    """
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
-    env = Environment(loader=FileSystemLoader('website'))
-    template = env.get_template('template.html')
+    env = Environment(loader=FileSystemLoader(SITE_PATH))
+    template = env.get_template(TEMPLATE_FILE)
 
-    path = Path('content')
+    path = Path(CONTENT_PATH)
     for file in path.iterdir():
         parse_markdown(file, md, template)
 
