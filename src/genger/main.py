@@ -36,6 +36,11 @@ def main():
     """
     Main driver to run the program.
     """
+    print(f'\nContent path: {CONTENT_PATH}')
+    print(f'Site path: {SITE_PATH}')
+    print(f'Template file: {TEMPLATE_FILE}')
+    print('Generate HTML files ... ', end='')
+
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
     env = Environment(loader=FileSystemLoader(SITE_PATH))
@@ -45,6 +50,4 @@ def main():
     for file in path.iterdir():
         parse_markdown(file, md, template)
 
-
-if __name__ == '__main__':
-    main()
+    print('Done')

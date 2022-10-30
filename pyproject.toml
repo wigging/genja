@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "genger"
+version = "22.10"
+dependencies = [
+    "markdown",
+    "jinja2"
+]
+
+[project.scripts]
+genger = "genger.main:main"
