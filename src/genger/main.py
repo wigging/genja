@@ -33,7 +33,7 @@ def main():
     """
     Main driver to run the program.
     """
-    parser = argparse.ArgumentParser(description='Generate HTML from markdown')
+    parser = argparse.ArgumentParser(description='Generate HTML files from markdown files.')
     parser.add_argument('input', help='markdown directory')
     parser.add_argument('output', help='html directory')
     args = parser.parse_args()
