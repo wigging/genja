@@ -3,12 +3,11 @@ Static site generator.
 """
 
 import markdown
-import textwrap
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 
-def parse_markdown(file, md):
+def parse_markdown(file, md, template):
 
     if file.suffix != '.md':
         return
@@ -19,13 +18,6 @@ def parse_markdown(file, md):
     html = md.convert(text)
     meta = md.Meta
 
-    print('')
-    print(file)
-    print(meta)
-    print(html)
-
-    env = Environment(loader=FileSystemLoader('htmlcontent'))
-    template = env.get_template('template.html')
     page = template.render(title=meta['title'][0], content=html)
 
     with open(f'htmlcontent/{file.stem}.html', 'w') as f:
@@ -35,11 +27,14 @@ def parse_markdown(file, md):
 
 
 def main():
-    md = markdown.Markdown(extensions=['meta'])
+    md = markdown.Markdown(extensions=['meta', 'fenced_code'])
+
+    env = Environment(loader=FileSystemLoader('htmlcontent'))
+    template = env.get_template('template.html')
 
     path = Path('mdcontent')
     for file in path.iterdir():
-        parse_markdown(file, md)
+        parse_markdown(file, md, template)
 
 
 if __name__ == '__main__':

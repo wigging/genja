@@ -5,4 +5,14 @@ date: 1989
 
 # First notes
 
-Some stuff goes in here.
+These are my first notes in this document
+
+```python
+def sayhello():
+    s = 'Hello there'
+    print(s)
+```
+
+Done.
+
+<p>Paragraph tag section here.</p>
