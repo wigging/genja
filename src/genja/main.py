@@ -1,5 +1,5 @@
 """
-HTML page generator from markdown files.
+Generate HTML files from markdown files.
 """
 
 import argparse
@@ -10,7 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 
 def parse_markdown(file, md, template, output):
     """
-    Parse the content of the markdown files and write to HTML.
+    Parse the content of the markdown files and write to HTML files.
     """
     if file.suffix != '.md':
         return

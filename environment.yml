@@ -1,12 +1,12 @@
-# Conda environment for developing the genger command line tool. See the
+# Conda environment for developing the genja command line tool. See the
 # comments below for some useful commands for this environment.
 #
 # Create the environment:      conda env create --file environment.yml
-# Activate the environment:    conda activate genger
+# Activate the environment:    conda activate genja
 # Deactivate the environment:  conda deactivate
-# Remove the environment:      conda env remove --name genger
+# Remove the environment:      conda env remove --name genja
 
-name: genger
+name: genja
 
 dependencies:
   - python
