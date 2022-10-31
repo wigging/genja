@@ -41,6 +41,16 @@ options:
   -h, --help  show this help message and exit
 ```
 
+## Example
+
+To run the example, go to the example directory in this repository. Use the `mdcontent` as the input directory and the `website` as the output directory. Notice the template file used by genja is located in the `website` directory. The index file links to the generated HTML pages. The template and index files are created by the user, not by genja.
+
+```bash
+# Run the example
+cd example
+genja mdcontent website
+```
+
 ## Contributing
 
 Use the conda environment file to create a Python environment for developing genja.
