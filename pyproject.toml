@@ -5,10 +5,19 @@ build-backend = "hatchling.build"
 [project]
 name = "genja"
 version = "22.10"
-dependencies = [
-    "markdown",
-    "jinja2"
+authors = [{name = "Gavin Wiggins"}]
+description = "Generate HTML files from Markdown files"
+readme = "README.md"
+dependencies = ["markdown", "jinja2"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
 ]
+license = "MIT"
+
+[project.urls]
+"Homepage" = "https://github.com/wigging/genja"
 
 [project.scripts]
 genja = "genja.main:main"
