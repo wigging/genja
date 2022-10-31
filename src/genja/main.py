@@ -21,7 +21,7 @@ def parse_markdown(file, md, template, output):
     html = md.convert(text)
     meta = md.Meta
 
-    page = template.render(title=meta['title'][0], content=html)
+    page = template.render(data=meta, content=html)
 
     with open(f'{output}/{file.stem}.html', 'w') as f:
         f.write(page)
@@ -38,10 +38,10 @@ def main():
     parser.add_argument('output', help='html directory')
     args = parser.parse_args()
 
-    print(f'\nMarkdown directory: {args.input}')
-    print(f'HTML directory: {args.output}')
-    print(f'Template file: {args.input}/template.html')
-    print('Generate HTML files ... ', end='')
+    print(f'\n{"Markdown directory ":.<30} {args.input}')
+    print(f'{"HTML directory ":.<30} {args.output}')
+    print(f'{"Template file ":.<30} {args.input}/template.html')
+    print(f'{"Generate HTML files ":.<30} ', end='')
 
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
@@ -52,4 +52,4 @@ def main():
     for file in path.iterdir():
         parse_markdown(file, md, template, args.output)
 
-    print('Done')
+    print('DONE')
