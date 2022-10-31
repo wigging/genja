@@ -1,5 +1,5 @@
 """
-Generate HTML files from markdown files.
+Generate HTML files from Markdown files.
 """
 
 import argparse
@@ -33,7 +33,7 @@ def main():
     """
     Main driver to run the program.
     """
-    parser = argparse.ArgumentParser(description='Generate HTML files from markdown files.')
+    parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
     parser.add_argument('input', help='markdown directory')
     parser.add_argument('output', help='html directory')
     args = parser.parse_args()

@@ -1,6 +1,6 @@
 # Genja
 
-Genja is a simple command line tool that generates HTML files from markdown files.
+Genja is a simple command line tool that generates HTML files from Markdown files.
 
 ## Installation
 
@@ -8,7 +8,7 @@ Clone this project and install with pip.
 
 ```bash
 # Clone the project
-git clone x
+git clone https://github.com/wigging/genja.git
 
 # Install with pip
 cd genja
@@ -17,11 +17,11 @@ pip install .
 
 ## Usage
 
-Run genja from the command line by providing the input and output directories as arguments. The input directory contains the markdown files. The output directory is where the generated HTML files are written.
+Run genja from the command line by providing the input and output directories as arguments. The input directory contains the Markdown files. The output directory is where the generated HTML files are written. The output directory must contain a Jinja template file named `template.html`. This template is used to render the generated HTML files.
 
 ```bash
 # Run genja where input is `content` directory and output is `website` directory.
-# Input directory contains the markdown files.
+# Input directory contains the Markdown files.
 # Output directory contains the generated HTML files.
 genja content website
 ```
@@ -31,7 +31,7 @@ Output from running the help command `genja --help` is shown below.
 ```
 usage: genja [-h] input output
 
-Generate HTML files from markdown files.
+Generate HTML files from Markdown files.
 
 positional arguments:
   input       markdown directory
@@ -52,3 +52,7 @@ conda env create --file environment.yml
 # Activate the environment
 conda activate genja
 ```
+
+## License
+
+This project is licensed under the terms of the MIT license. See [here](LICENSE.md) for the license text.
