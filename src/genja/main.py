@@ -10,31 +10,27 @@ from jinja2 import Environment, FileSystemLoader
 
 def parse_markdown(pathin, output, md, template):
     """
-    Parse content of Markdown files and write to HTML files. Folders are
-    created for categories.
+    Parse content of Markdown files and write to HTML files. If needed,
+    subfolders are created too.
     """
-    for mdfile in pathin.glob('*.md'):
+    for mdfile in pathin.glob('**/*.md'):
 
         with mdfile.open() as f:
             text = f.read()
 
         html = md.convert(text)
         meta = md.Meta
-
         page = template.render(data=meta, content=html)
 
-        if 'category' in meta:
-            folder = Path(f'{output}/{meta["category"][0]}')
+        if len(mdfile.parts) > 2:
+            folder = Path(f'{output}/{mdfile.parts[1]}')
             folder.mkdir(parents=True, exist_ok=True)
-
             pathout = folder / f'{mdfile.stem}.html'
-            with pathout.open('w') as f:
-                f.write(page)
         else:
             pathout = Path(f'{output}/{mdfile.stem}.html')
 
-            with pathout.open('w') as f:
-                f.write(page)
+        with pathout.open('w') as f:
+            f.write(page)
 
         md.reset()
 
