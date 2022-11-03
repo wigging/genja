@@ -8,25 +8,35 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 
-def parse_markdown(file, md, template, output):
+def parse_markdown(pathin, output, md, template):
     """
-    Parse the content of the markdown files and write to HTML files.
+    Parse content of Markdown files and write to HTML files. Folders are
+    created for categories.
     """
-    if file.suffix != '.md':
-        return
+    for mdfile in pathin.glob('*.md'):
 
-    with open(file, 'r') as f:
-        text = f.read()
+        with mdfile.open() as f:
+            text = f.read()
 
-    html = md.convert(text)
-    meta = md.Meta
+        html = md.convert(text)
+        meta = md.Meta
 
-    page = template.render(data=meta, content=html)
+        page = template.render(data=meta, content=html)
 
-    with open(f'{output}/{file.stem}.html', 'w') as f:
-        f.write(page)
+        if 'category' in meta:
+            folder = Path(f'{output}/{meta["category"][0]}')
+            folder.mkdir(parents=True, exist_ok=True)
 
-    md.reset()
+            pathout = folder / f'{mdfile.stem}.html'
+            with pathout.open('w') as f:
+                f.write(page)
+        else:
+            pathout = Path(f'{output}/{mdfile.stem}.html')
+
+            with pathout.open('w') as f:
+                f.write(page)
+
+        md.reset()
 
 
 def main():
@@ -48,8 +58,7 @@ def main():
     env = Environment(loader=FileSystemLoader(args.output))
     template = env.get_template('template.html')
 
-    path = Path(args.input)
-    for file in path.iterdir():
-        parse_markdown(file, md, template, args.output)
+    pathin = Path(args.input)
+    parse_markdown(pathin, args.output, md, template)
 
     print('DONE')
