@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genja"
-version = "22.10"
+version = "22.11"
 authors = [{name = "Gavin Wiggins"}]
 description = "Generate HTML files from Markdown files"
 readme = "README.md"
