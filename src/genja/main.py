@@ -8,26 +8,24 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 
-def parse_markdown(pathin, output, md, template):
+def parse_markdown(indir, outdir, md, template):
     """
     Parse content of Markdown files and write to HTML files. If needed,
     subfolders are created too.
     """
-    for mdfile in pathin.glob('**/*.md'):
+    for mdfile in Path(indir).glob('**/*.md'):
 
         with mdfile.open() as f:
-            text = f.read()
+            mdtext = f.read()
 
-        html = md.convert(text)
+        html = md.convert(mdtext)
         meta = md.Meta
         page = template.render(data=meta, content=html)
 
-        if len(mdfile.parts) > 2:
-            folder = Path(f'{output}/{mdfile.parts[1]}')
-            folder.mkdir(parents=True, exist_ok=True)
-            pathout = folder / f'{mdfile.stem}.html'
-        else:
-            pathout = Path(f'{output}/{mdfile.stem}.html')
+        parts = list(mdfile.parts)
+        parts[0] = outdir
+        pathout = Path(*parts).with_suffix('.html')
+        pathout.parent.mkdir(parents=True, exist_ok=True)
 
         with pathout.open('w') as f:
             f.write(page)
@@ -54,7 +52,6 @@ def main():
     env = Environment(loader=FileSystemLoader(args.output))
     template = env.get_template('template.html')
 
-    pathin = Path(args.input)
-    parse_markdown(pathin, args.output, md, template)
+    parse_markdown(args.input, args.output, md, template)
 
     print('DONE')
