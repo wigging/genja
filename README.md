@@ -17,11 +17,11 @@ pip install .
 
 ## Usage
 
-Run genja from the command line by providing the input and output directories as arguments. The input directory contains the Markdown files. The output directory is where the generated HTML files are written. The output directory must contain a Jinja template file named `template.html`. This template is used to render the generated HTML files.
+Run genja from the command line by providing the input and output directories as arguments. The input directory contains the Markdown files and must contain a Jinja template file named `template.html`. This template is used to render the generated HTML files. The output directory is where the generated HTML files are written.
 
 ```bash
 # Run genja where input is `content` directory and output is `website` directory.
-# Input directory contains the Markdown files.
+# Input directory contains the Markdown files and Jinja template.
 # Output directory contains the generated HTML files.
 genja content website
 ```

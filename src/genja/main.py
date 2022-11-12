@@ -43,13 +43,13 @@ def main():
     args = parser.parse_args()
 
     print(f'\n{"Markdown directory ":.<30} {args.input}')
-    print(f'{"HTML directory ":.<30} {args.output}')
     print(f'{"Template file ":.<30} {args.input}/template.html')
+    print(f'{"HTML directory ":.<30} {args.output}')
     print(f'{"Generate HTML files ":.<30} ', end='')
 
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
-    env = Environment(loader=FileSystemLoader(args.output))
+    env = Environment(loader=FileSystemLoader(args.input))
     template = env.get_template('template.html')
 
     parse_markdown(args.input, args.output, md, template)
