@@ -38,8 +38,8 @@ def main():
     Main driver to run the program.
     """
     parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
-    parser.add_argument('input', help='markdown directory')
-    parser.add_argument('output', help='html directory')
+    parser.add_argument('input', help='Directory of Markdown files and Jinja template')
+    parser.add_argument('output', help='Directory for generated HTML files')
     args = parser.parse_args()
 
     print(f'\n{"Markdown directory ":.<30} {args.input}')

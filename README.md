@@ -17,7 +17,7 @@ pip install .
 
 ## Usage
 
-Run genja from the command line by providing the input and output directories as arguments. The input directory contains the Markdown files and must contain a Jinja template file named `template.html`. This template is used to render the generated HTML files. The output directory is where the generated HTML files are written.
+Run genja from the command line by providing the input and output directories as arguments. The input directory contains the Markdown files and must contain a [Jinja](https://jinja.palletsprojects.com/) template file named `template.html`. This template is used to render the generated HTML files. The output directory is where the generated HTML files are written.
 
 ```bash
 # Run genja where input is `content` directory and output is `website` directory.
@@ -34,8 +34,8 @@ usage: genja [-h] input output
 Generate HTML files from Markdown files.
 
 positional arguments:
-  input       markdown directory
-  output      html directory
+  input       Directory of Markdown files and Jinja template
+  output      Directory for generated HTML files
 
 options:
   -h, --help  show this help message and exit
@@ -43,7 +43,7 @@ options:
 
 ## Example
 
-To run the example, go to the example directory in this repository. Use the `mdcontent` as the input directory and the `website` as the output directory. Notice the template file used by genja is located in the `website` directory. The index file links to the generated HTML pages. The template and index files are created by the user, not by genja.
+To run the example, go to the example directory in this repository. Use the `mdcontent` as the input directory and the `website` as the output directory. Notice the template file used by genja is located in the `mdcontent` directory. The index file links to the generated HTML pages. The template and index files are created by the user, not by genja.
 
 ```bash
 # Run the example
