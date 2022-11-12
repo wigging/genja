@@ -6,6 +6,7 @@ import argparse
 import markdown
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
+from importlib.metadata import version
 
 
 def parse_markdown(indir, outdir, md, template):
@@ -38,8 +39,9 @@ def main():
     Main driver to run the program.
     """
     parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
-    parser.add_argument('input', help='Directory of Markdown files and Jinja template')
-    parser.add_argument('output', help='Directory for generated HTML files')
+    parser.add_argument('input', help='directory of Markdown files and Jinja template')
+    parser.add_argument('output', help='directory for generated HTML files')
+    parser.add_argument('-v', '--version', action='version', version=version('genja'))
     args = parser.parse_args()
 
     print(f'\n{"Markdown directory ":.<30} {args.input}')

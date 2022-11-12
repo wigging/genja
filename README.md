@@ -29,16 +29,17 @@ genja content website
 Output from running the help command `genja --help` is shown below.
 
 ```
-usage: genja [-h] input output
+usage: genja [-h] [-v] input output
 
 Generate HTML files from Markdown files.
 
 positional arguments:
-  input       Directory of Markdown files and Jinja template
-  output      Directory for generated HTML files
+  input          directory of Markdown files and Jinja template
+  output         directory for generated HTML files
 
 options:
-  -h, --help  show this help message and exit
+  -h, --help     show this help message and exit
+  -v, --version  show program's version number and exit
 ```
 
 ## Example
