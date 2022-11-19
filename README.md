@@ -4,15 +4,17 @@ Genja is a simple command line tool that generates HTML files from Markdown file
 
 ## Installation
 
-Clone this project and install with pip.
+Install from [PyPI](https://pypi.org) using the following command:
 
-```bash
-# Clone the project
-git clone https://github.com/wigging/genja.git
+```
+pip install genja
+```
 
-# Install with pip
-cd genja
-pip install .
+Check the installed version from the command line:
+
+```
+$ genja --version
+22.11
 ```
 
 ## Usage
@@ -54,13 +56,17 @@ genja mdcontent website
 
 ## Contributing
 
-Use the conda environment file to create a Python environment for developing genja.
+Clone this repository and use the conda environment file to create a Python environment for developing genja. This environment uses [flake8](https://github.com/PyCQA/flake8) for linting and [pytest](https://github.com/pytest-dev/pytest) for running tests. Genja is installed in editable mode within the environment.
 
 ```bash
+# Clone the project
+git clone https://github.com/wigging/genja.git
+
 # Create the conda environment
+cd genja
 conda env create --file environment.yml
 
-# Activate the environment
+# Activate the conda environment
 conda activate genja
 ```
 
