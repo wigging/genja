@@ -4,7 +4,7 @@ Genja is a simple command line tool that generates HTML files from Markdown file
 
 ## Installation
 
-Install from [PyPI](https://pypi.org) using the following command:
+Download and install Python from [python.org](https://www.python.org) or from [Anaconda](https://www.anaconda.com). Next, install genja from [PyPI](https://pypi.org) using the following command:
 
 ```
 pip install genja
