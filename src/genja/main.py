@@ -51,7 +51,7 @@ def main():
 
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
-    env = Environment(loader=FileSystemLoader(args.input))
+    env = Environment(loader=FileSystemLoader('templates'))
     template = env.get_template('template.html')
 
     parse_markdown(args.input, args.output, md, template)
