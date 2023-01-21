@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{{ content }}
+
+<h5>This page title is {{ data['title'][0] }}.</h5>
+
+<h5>This page date is {{ data['date'][0] }}.</h5>
+
+{% endblock %}

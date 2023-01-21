@@ -15,16 +15,15 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/styles.css">
 
-    <title>{{ data['title'][0] }}</title>
+    <title>My Website</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-md">
 
-{{ content }}
+{% block content %}{% endblock %}
 
-<p>This note was written in {{ data['date'][0] }}.</p>
         </div>
     </div>
 </div>

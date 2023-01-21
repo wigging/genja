@@ -39,7 +39,7 @@ def main():
     Main driver to run the program.
     """
     parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
-    parser.add_argument('input', help='directory of Markdown files and Jinja template')
+    parser.add_argument('input', help='directory of Markdown files')
     parser.add_argument('output', help='directory for generated HTML files')
     parser.add_argument('-v', '--version', action='version', version=version('genja'))
     args = parser.parse_args()
@@ -52,8 +52,8 @@ def main():
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
     env = Environment(loader=FileSystemLoader('templates'))
-    template = env.get_template('template.html')
+    page_template = env.get_template('page.html')
 
-    parse_markdown(args.input, args.output, md, template)
+    parse_markdown(args.input, args.output, md, page_template)
 
     print('DONE')
