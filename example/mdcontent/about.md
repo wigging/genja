@@ -1,9 +1,9 @@
 ---
-title: My first notes
+title: About me stuff
 date: 1989
 ---
 
-# First notes
+# About me
 
 These are my first notes in this document
 
@@ -16,3 +16,9 @@ def sayhello():
 Done.
 
 <p>Paragraph tag section here.</p>
+
+Below is an image.
+
+![the image](/img/photo.jpg)
+
+Done again.
