@@ -9,20 +9,20 @@
 
 <h2>Cars</h2>
 <ul>
-    {% for item in items %}
-    {% if item.section == 'cars' %}
-        <li><a href="{{ item.link }}">{{ item.title }}</a></li>
-    {% endif %}
-    {% endfor %}
+{% for item in items %}
+{% if item.section == 'cars' %}
+    <li><a href="{{ base_url }}{{ item.link }}">{{ item.title }}</a></li>
+{% endif %}
+{% endfor %}
 </ul>
 
 <h2>Trucks</h2>
 <ul>
-    {% for item in items %}
-    {% if item.section == 'trucks' %}
-        <li><a href="{{ item.link }}">{{ item.title }}</a></li>
-    {% endif %}
-    {% endfor %}
+{% for item in items %}
+{% if item.section == 'trucks' %}
+    <li><a href="{{ base_url }}{{ item.link }}">{{ item.title }}</a></li>
+{% endif %}
+{% endfor %}
 </ul>
 
 {% endblock %}

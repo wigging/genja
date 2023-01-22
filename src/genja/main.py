@@ -12,6 +12,8 @@ from operator import itemgetter
 from functools import partial
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
+BASE_URL = 'https://gavinw.me/testsite'
+
 
 def run_server(args):
     """
@@ -33,9 +35,15 @@ def build_index(args, md, template):
     Build the index.html page.
     """
 
-    # Get input and output directories
+    # Get input and output directories and command
     input_dir = args.input
     output_dir = args.output
+    command = args.command
+
+    if command == 'build':
+        base_url = BASE_URL
+    else:
+        base_url = ''
 
     # Store items for the index.html template
     items = []
@@ -60,7 +68,7 @@ def build_index(args, md, template):
     sorted_items = sorted(items, key=itemgetter('section', 'title'))
 
     # Write index.html to output directory
-    index_html = template.render(items=sorted_items)
+    index_html = template.render(items=sorted_items, base_url=base_url)
     output_path = Path(f'{output_dir}/index.html')
 
     with output_path.open('w') as f:
@@ -79,14 +87,23 @@ def build_pages(args, md, template):
     input_dir = args.input
     output_dir = args.output
 
+    command = args.command
+
+    if command == 'build':
+        base_url = BASE_URL
+    else:
+        base_url = ''
+
     for mdfile in Path(input_dir).glob('**/*.md'):
 
         with mdfile.open() as f:
             mdtext = f.read()
 
         html = md.convert(mdtext)
+        new_html = html.replace('/img', base_url + '/img')
+
         meta = md.Meta
-        page = template.render(data=meta, content=html)
+        page = template.render(data=meta, content=new_html)
 
         parts = list(mdfile.parts)
         parts[0] = output_dir
@@ -107,6 +124,7 @@ def main():
     parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
     parser.add_argument('input', help='directory of Markdown files')
     parser.add_argument('output', help='directory for generated HTML files')
+    parser.add_argument('command', help='build or serve command')
     parser.add_argument('-v', '--version', action='version', version=version('genja'))
     args = parser.parse_args()
 
@@ -116,7 +134,7 @@ def main():
 
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
-    env = Environment(loader=FileSystemLoader('templates'), trim_blocks=True)
+    env = Environment(loader=FileSystemLoader('templates'), trim_blocks=True, lstrip_blocks=True)
     index_template = env.get_template('index.html')
     page_template = env.get_template('page.html')
 
