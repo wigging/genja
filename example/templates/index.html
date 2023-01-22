@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>My Website</h1>
+<p>Hello, welcome to my website.</p>
+<p>More information on the <a href="about.html">About</a> page.</p>
+<p>Use the <a href="contact.html">Contact</a> page to reach me.</p>
+
+<h2>Cars</h2>
+<ul>
+    {% for item in items %}
+    {% if item.section == 'cars' %}
+        <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+<h2>Trucks</h2>
+<ul>
+    {% for item in items %}
+    {% if item.section == 'trucks' %}
+        <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+{% endblock %}
