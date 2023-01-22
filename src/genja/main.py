@@ -95,7 +95,7 @@ def main():
 
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
 
-    env = Environment(loader=FileSystemLoader('templates'))
+    env = Environment(loader=FileSystemLoader('templates'), trim_blocks=True)
     index_template = env.get_template('index.html')
     page_template = env.get_template('page.html')
 
