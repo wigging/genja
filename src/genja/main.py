@@ -121,12 +121,19 @@ def main():
     Main driver to run the program.
     """
 
+    # parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
+    # parser.add_argument('input', help='directory of Markdown files')
+    # parser.add_argument('output', help='directory for generated HTML files')
+    # parser.add_argument('command', help='build or serve command')
+    # parser.add_argument('-v', '--version', action='version', version=version('genja'))
+    # args = parser.parse_args()
+
     parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
-    parser.add_argument('input', help='directory of Markdown files')
-    parser.add_argument('output', help='directory for generated HTML files')
-    parser.add_argument('command', help='build or serve command')
+    parser.add_argument('command', choices=['build', 'serve'], help='build or serve website')
     parser.add_argument('-v', '--version', action='version', version=version('genja'))
     args = parser.parse_args()
+
+    breakpoint()
 
     print(f'\n{"Markdown directory ":.<30} {args.input}')
     print(f'{"HTML directory ":.<30} {args.output}')
