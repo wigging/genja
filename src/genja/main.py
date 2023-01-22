@@ -7,6 +7,7 @@ import markdown
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from importlib.metadata import version
+from operator import itemgetter
 
 
 def build_index(args, md, template):
@@ -37,8 +38,11 @@ def build_index(args, md, template):
             title = meta['title'][0]
             items.append({'section': section, 'link': link, 'title': title})
 
+    # Sort the items using section and title
+    sorted_items = sorted(items, key=itemgetter('section', 'title'))
+
     # Write index.html to output directory
-    index_html = template.render(items=items)
+    index_html = template.render(items=sorted_items)
     output_path = Path(f'{output_dir}/index.html')
 
     with output_path.open('w') as f:
@@ -89,7 +93,6 @@ def main():
     args = parser.parse_args()
 
     print(f'\n{"Markdown directory ":.<30} {args.input}')
-    print(f'{"Template file ":.<30} {args.input}/template.html')
     print(f'{"HTML directory ":.<30} {args.output}')
     print(f'{"Generate HTML files ":.<30} ', end='')
 
