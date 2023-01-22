@@ -1,28 +1,52 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block content %}
+    <!-- Bootstrap https://getbootstrap.com -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-<h1>My Website</h1>
-<p>Hello, welcome to my website.</p>
-<p>More information on the <a href="about.html">About</a> page.</p>
-<p>Use the <a href="contact.html">Contact</a> page to reach me.</p>
+    <!-- Highlightjs https://highlightjs.org -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 
-<h2>Cars</h2>
-<ul>
-{% for item in items %}
-{% if item.section == 'cars' %}
-    <li><a href="{{ base_url }}{{ item.link }}">{{ item.title }}</a></li>
-{% endif %}
-{% endfor %}
-</ul>
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ base_url }}/styles.css">
 
-<h2>Trucks</h2>
-<ul>
-{% for item in items %}
-{% if item.section == 'trucks' %}
-    <li><a href="{{ base_url }}{{ item.link }}">{{ item.title }}</a></li>
-{% endif %}
-{% endfor %}
-</ul>
+    <title>My Website</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
 
-{% endblock %}
+        <h1>My Website</h1>
+        <p>Hello, welcome to my website.</p>
+        <p>More information on the <a href="about.html">About</a> page.</p>
+        <p>Use the <a href="contact.html">Contact</a> page to reach me.</p>
+
+        <h2>Cars</h2>
+        <ul>
+        {% for item in items %}
+        {% if item.section == 'cars' %}
+            <li><a href="{{ base_url }}{{ item.link }}">{{ item.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+
+        <h2>Trucks</h2>
+        <ul>
+        {% for item in items %}
+        {% if item.section == 'trucks' %}
+            <li><a href="{{ base_url }}{{ item.link }}">{{ item.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

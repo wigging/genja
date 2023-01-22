@@ -4,6 +4,7 @@ Generate HTML files from Markdown files.
 
 import argparse
 import markdown
+import json
 import webbrowser
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
@@ -12,16 +13,14 @@ from operator import itemgetter
 from functools import partial
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-BASE_URL = 'https://gavinw.me/testsite'
 
-
-def run_server(args):
+def run_server(config):
     """
     Run local server for viewing the website.
     """
 
     server_address = ('localhost', 9000)
-    handler = partial(SimpleHTTPRequestHandler, directory=args.output)
+    handler = partial(SimpleHTTPRequestHandler, directory=config['output_dir'])
     httpd = HTTPServer(server_address, handler)
 
     print('Serving at http://localhost:9000')
@@ -30,20 +29,22 @@ def run_server(args):
     httpd.serve_forever()
 
 
-def build_index(args, md, template):
+def build_index(config, md, template):
     """
     Build the index.html page.
     """
 
-    # Get input and output directories and command
-    input_dir = args.input
-    output_dir = args.output
-    command = args.command
+    # Get configuration
+    command = config['command']
+    repo_name = config['repo_name']
+    input_dir = config['input_dir']
+    output_dir = config['output_dir']
 
-    if command == 'build':
-        base_url = BASE_URL
-    else:
+    # Set base url based on run command
+    if command == 'serve':
         base_url = ''
+    else:
+        base_url = '/' + repo_name
 
     # Store items for the index.html template
     items = []
@@ -68,7 +69,7 @@ def build_index(args, md, template):
     sorted_items = sorted(items, key=itemgetter('section', 'title'))
 
     # Write index.html to output directory
-    index_html = template.render(items=sorted_items, base_url=base_url)
+    index_html = template.render(base_url=base_url, items=sorted_items)
     output_path = Path(f'{output_dir}/index.html')
 
     with output_path.open('w') as f:
@@ -77,33 +78,38 @@ def build_index(args, md, template):
     md.reset()
 
 
-def build_pages(args, md, template):
+def build_pages(config, md, template):
     """
     Parse content of Markdown files and write to HTML files. If needed,
     subfolders are created too.
     """
 
-    # Get input and output directories
-    input_dir = args.input
-    output_dir = args.output
+    # Get configuration
+    command = config['command']
+    repo_name = config['repo_name']
+    input_dir = config['input_dir']
+    output_dir = config['output_dir']
 
-    command = args.command
-
-    if command == 'build':
-        base_url = BASE_URL
-    else:
+    # Set base url based on run command
+    if command == 'serve':
         base_url = ''
+    else:
+        base_url = '/' + repo_name
 
+    # Parse markdown files and build website pages
     for mdfile in Path(input_dir).glob('**/*.md'):
 
         with mdfile.open() as f:
             mdtext = f.read()
 
-        html = md.convert(mdtext)
-        new_html = html.replace('/img', base_url + '/img')
+        if command == 'serve':
+            html = md.convert(mdtext)
+        else:
+            html = md.convert(mdtext)
+            html = html.replace('/img', base_url + '/img')
 
         meta = md.Meta
-        page = template.render(data=meta, content=new_html)
+        page = template.render(base_url=base_url, data=meta, content=html)
 
         parts = list(mdfile.parts)
         parts[0] = output_dir
@@ -121,22 +127,21 @@ def main():
     Main driver to run the program.
     """
 
-    # parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
-    # parser.add_argument('input', help='directory of Markdown files')
-    # parser.add_argument('output', help='directory for generated HTML files')
-    # parser.add_argument('command', help='build or serve command')
-    # parser.add_argument('-v', '--version', action='version', version=version('genja'))
-    # args = parser.parse_args()
-
     parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
     parser.add_argument('command', choices=['build', 'serve'], help='build or serve website')
     parser.add_argument('-v', '--version', action='version', version=version('genja'))
     args = parser.parse_args()
 
-    breakpoint()
+    # Get configuration from JSON file
+    with open("config.json") as json_file:
+        config = json.load(json_file)
 
-    print(f'\n{"Markdown directory ":.<30} {args.input}')
-    print(f'{"HTML directory ":.<30} {args.output}')
+    config['command'] = args.command
+
+    print(f'\n{"Command ":.<30} {config["command"]}')
+    print(f'{"Repository name ":.<30} {config["repo_name"]}')
+    print(f'{"Input directory ":.<30} {config["input_dir"]}')
+    print(f'{"Output directory ":.<30} {config["output_dir"]}')
     print(f'{"Generate HTML files ":.<30} ', end='')
 
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
@@ -145,9 +150,10 @@ def main():
     index_template = env.get_template('index.html')
     page_template = env.get_template('page.html')
 
-    build_index(args, md, index_template)
-    build_pages(args, md, page_template)
+    build_index(config, md, index_template)
+    build_pages(config, md, page_template)
 
     print('DONE\n')
 
-    run_server(args)
+    if config['command'] == 'serve':
+        run_server(config)

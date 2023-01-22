@@ -1,11 +1,35 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block content %}
+    <!-- Bootstrap https://getbootstrap.com -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-{{ content }}
+    <!-- Highlightjs https://highlightjs.org -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 
-<h5>This page title is {{ data['title'][0] }}.</h5>
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ base_url }}/styles.css">
 
-<h5>This page date is {{ data['date'][0] }}.</h5>
+    <title>My Website</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
 
-{% endblock %}
+            {{ content }}
+
+            <h5>This page title is {{ data['title'][0] }}.</h5>
+
+            <h5>This page date is {{ data['date'][0] }}.</h5>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
