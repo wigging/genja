@@ -4,10 +4,28 @@ Generate HTML files from Markdown files.
 
 import argparse
 import markdown
+import webbrowser
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from importlib.metadata import version
 from operator import itemgetter
+from functools import partial
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+
+
+def run_server(args):
+    """
+    Run local server for viewing the website.
+    """
+
+    server_address = ('localhost', 9000)
+    handler = partial(SimpleHTTPRequestHandler, directory=args.output)
+    httpd = HTTPServer(server_address, handler)
+
+    print('Serving at http://localhost:9000')
+    webbrowser.open('http://localhost:9000')
+
+    httpd.serve_forever()
 
 
 def build_index(args, md, template):
@@ -105,4 +123,6 @@ def main():
     build_index(args, md, index_template)
     build_pages(args, md, page_template)
 
-    print('DONE')
+    print('DONE\n')
+
+    run_server(args)
