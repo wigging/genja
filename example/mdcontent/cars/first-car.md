@@ -1,6 +1,6 @@
 ---
 title: My first car
-date: 1997
+date: November 19, 2020
 ---
 
 # First car

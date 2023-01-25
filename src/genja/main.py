@@ -12,6 +12,8 @@ from importlib.metadata import version
 from operator import itemgetter
 from functools import partial
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+from datetime import datetime
+from bs4 import BeautifulSoup
 
 
 def run_server(config):
@@ -27,6 +29,55 @@ def run_server(config):
     webbrowser.open('http://localhost:9000')
 
     httpd.serve_forever()
+
+
+def build_feed(config, md, template):
+    """
+    Build the JSON feed.
+    """
+
+    # Get configuration
+    base_url = config['base_url']
+    input_dir = config['input_dir']
+    output_dir = config['output_dir']
+
+    # Store feed dictionaries for feed.json template
+    feeds = []
+
+    # Parse the Markdown files and get metadata for each page
+    for mdfile in Path(input_dir).glob('**/*.md'):
+
+        parts = list(mdfile.parts)
+
+        if len(parts) == 3:
+
+            with mdfile.open() as f:
+                mdtext = f.read()
+
+            html = md.convert(mdtext)
+            meta = md.Meta
+
+            soup = BeautifulSoup(html, 'html.parser')
+            url = f'{base_url}/{parts[1]}/{parts[2].replace("md", "html")}'
+
+            feeds.append({
+                'url': url,
+                'title': meta['title'][0],
+                'html': soup.p,
+                'date': datetime.strptime(meta['date'][0], '%B %d, %Y').isoformat() + 'Z'
+            })
+
+    # Sort feed dictionaries using date
+    sorted_feeds = sorted(feeds, key=itemgetter('date'), reverse=True)
+
+    # Write feed.json to output directory
+    feed_json = template.render(feeds=sorted_feeds)
+    output_path = Path(f'{output_dir}/feed.json')
+
+    with output_path.open('w') as f:
+        f.write(feed_json)
+
+    md.reset()
 
 
 def build_pages(config, md, template):
@@ -140,9 +191,10 @@ def main():
     config['command'] = args.command
 
     print(f'\n{"Command ":.<30} {config["command"]}')
+    print(f'{"Base URL ":.<30} {config["base_url"]}')
     print(f'{"Repository name ":.<30} {config["repo_name"]}')
     print(f'{"Input directory ":.<30} {config["input_dir"]}')
-    print(f'{"Output directory ":.<30} {config["output_dir"]}')
+    print(f'{"Output directory ":.<30} {config["output_dir"]}\n')
 
     # Setup the Markdown converter
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
@@ -151,10 +203,12 @@ def main():
     env = Environment(loader=FileSystemLoader('templates'), trim_blocks=True, lstrip_blocks=True)
     index_template = env.get_template('index.html')
     page_template = env.get_template('page.html')
+    feed_template = env.get_template('feed.json')
 
     # Build the HTML index and pages
     build_index(config, md, index_template)
     build_pages(config, md, page_template)
+    build_feed(config, md, feed_template)
 
     # Run a local server and open browser if run command is `serve`
     if config['command'] == 'serve':

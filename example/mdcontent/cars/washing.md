@@ -1,6 +1,6 @@
 ---
 title: How to wash your car
-date: 2001
+date: June 5, 2020
 ---
 
 # Washing your car

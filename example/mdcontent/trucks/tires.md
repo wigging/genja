@@ -1,6 +1,6 @@
 ---
 title: Truck tires
-date: 1985
+date: October 18, 2021
 ---
 
 # Good truck tires

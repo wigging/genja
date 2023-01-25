@@ -1,4 +1,5 @@
 {
+    "base_url": "https://example.com/testsite",
     "repo_name": "testsite",
     "input_dir": "mdcontent",
     "output_dir": "website"
