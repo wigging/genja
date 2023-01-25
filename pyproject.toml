@@ -8,7 +8,7 @@ version = "22.11"
 authors = [{name = "Gavin Wiggins"}]
 description = "Generate HTML files from Markdown files"
 readme = "README.md"
-dependencies = ["markdown", "jinja2"]
+dependencies = ["markdown", "jinja2", "beautifulsoup4"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

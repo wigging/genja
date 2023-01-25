@@ -13,6 +13,7 @@ dependencies:
   - flake8
   - markdown
   - jinja2
+  - beautifulsoup4
   - ipython
   - pytest
   - pip
