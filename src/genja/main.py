@@ -5,177 +5,18 @@ Generate HTML files from Markdown files.
 import argparse
 import markdown
 import json
-import webbrowser
-from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from importlib.metadata import version
-from operator import itemgetter
-from functools import partial
-from http.server import HTTPServer, SimpleHTTPRequestHandler
-from datetime import datetime
-from bs4 import BeautifulSoup
 
-
-def run_server(config):
-    """
-    Run a local server and open a browser to view the website.
-    """
-
-    server_address = ('localhost', 9000)
-    handler = partial(SimpleHTTPRequestHandler, directory=config['output_dir'])
-    httpd = HTTPServer(server_address, handler)
-
-    print('Serving at http://localhost:9000')
-    webbrowser.open('http://localhost:9000')
-
-    httpd.serve_forever()
-
-
-def build_feed(config, md, template):
-    """
-    Build the JSON feed.
-    """
-
-    # Get configuration
-    base_url = config['base_url']
-    input_dir = config['input_dir']
-    output_dir = config['output_dir']
-
-    # Store feed dictionaries for feed.json template
-    feeds = []
-
-    # Parse the Markdown files and get metadata for each page
-    for mdfile in Path(input_dir).glob('**/*.md'):
-
-        parts = list(mdfile.parts)
-
-        if len(parts) == 3:
-
-            with mdfile.open() as f:
-                mdtext = f.read()
-
-            html = md.convert(mdtext)
-            meta = md.Meta
-
-            soup = BeautifulSoup(html, 'html.parser')
-            url = f'{base_url}/{parts[1]}/{parts[2].replace("md", "html")}'
-
-            feeds.append({
-                'url': url,
-                'title': meta['title'][0],
-                'html': soup.p,
-                'date': datetime.strptime(meta['date'][0], '%B %d, %Y').isoformat() + 'Z'
-            })
-
-    # Sort feed dictionaries using date
-    sorted_feeds = sorted(feeds, key=itemgetter('date'), reverse=True)
-
-    # Write feed.json to output directory
-    feed_json = template.render(feeds=sorted_feeds)
-    output_path = Path(f'{output_dir}/feed.json')
-
-    with output_path.open('w') as f:
-        f.write(feed_json)
-
-    md.reset()
-
-
-def build_pages(config, md, template):
-    """
-    Build root and section HTML pages from Markdown files.
-    """
-
-    # Get configuration
-    command = config['command']
-    repo_name = config['repo_name']
-    input_dir = config['input_dir']
-    output_dir = config['output_dir']
-
-    # Set base url based on run command
-    if command == 'serve':
-        base_url = ''
-    else:
-        base_url = '/' + repo_name
-
-    # Parse the Markdown files and build HTML pages
-    for mdfile in Path(input_dir).glob('**/*.md'):
-
-        with mdfile.open() as f:
-            mdtext = f.read()
-
-        if command == 'serve':
-            html = md.convert(mdtext)
-        else:
-            html = md.convert(mdtext)
-            html = html.replace('/img', base_url + '/img')
-
-        meta = md.Meta
-        page = template.render(base_url=base_url, data=meta, content=html)
-
-        parts = list(mdfile.parts)
-        parts[0] = output_dir
-        pathout = Path(*parts).with_suffix('.html')
-        pathout.parent.mkdir(parents=True, exist_ok=True)
-
-        with pathout.open('w') as f:
-            f.write(page)
-
-        md.reset()
-
-
-def build_index(config, md, template):
-    """
-    Build the index.html page.
-    """
-
-    # Get configuration
-    command = config['command']
-    repo_name = config['repo_name']
-    input_dir = config['input_dir']
-    output_dir = config['output_dir']
-
-    # Set base url based on run command
-    if command == 'serve':
-        base_url = ''
-    else:
-        base_url = '/' + repo_name
-
-    # Store page dictionaries for index.html template
-    pages = []
-
-    # Parse the Markdown files and get metadata for each page
-    for path in Path(input_dir).glob('**/*.md'):
-
-        with path.open() as f:
-            mdtext = f.read()
-
-        _ = md.convert(mdtext)
-        meta = md.Meta
-
-        parts = list(path.parts)
-
-        if len(parts) > 2:
-            section = parts[1]
-            link = f'/{parts[1]}/{parts[2].replace("md", "html")}'
-            title = meta['title'][0]
-            pages.append({'section': section, 'link': link, 'title': title})
-
-    # Sort page dictionaries using section and title
-    sorted_pages = sorted(pages, key=itemgetter('section', 'title'))
-
-    # Write index.html to output directory
-    index_html = template.render(base_url=base_url, pages=sorted_pages)
-    output_path = Path(f'{output_dir}/index.html')
-
-    with output_path.open('w') as f:
-        f.write(index_html)
-
-    md.reset()
+from .build_index import build_index
+from .build_pages import build_pages
+from .build_feed import build_feed
+from .run_server import run_server
 
 
 def main():
     """
-    Main driver to run the program.
+    Main driver to run the genja program.
     """
 
     # Command line arguments
@@ -194,7 +35,7 @@ def main():
     print(f'{"Base URL ":.<30} {config["base_url"]}')
     print(f'{"Repository name ":.<30} {config["repo_name"]}')
     print(f'{"Input directory ":.<30} {config["input_dir"]}')
-    print(f'{"Output directory ":.<30} {config["output_dir"]}\n')
+    print(f'{"Output directory ":.<30} {config["output_dir"]}')
 
     # Setup the Markdown converter
     md = markdown.Markdown(extensions=['meta', 'fenced_code'])
@@ -212,4 +53,4 @@ def main():
 
     # Run a local server and open browser if run command is `serve`
     if config['command'] == 'serve':
-        run_server(config)
+        run_server(config['output_dir'])
