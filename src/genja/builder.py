@@ -31,8 +31,11 @@ class Builder:
         Build root and section HTML pages from Markdown files.
         """
 
-        # Store page dictionaries for index.html template
+        # Store page dictionaries for index template
         pages = []
+
+        # Store feed dictionaries for feed template
+        feeds = []
 
         # Parse the Markdown files and build HTML pages
         for path in Path(self.input_dir).glob('**/*.md'):
@@ -51,7 +54,7 @@ class Builder:
             # Get metadata from the Markdown file
             meta = md.Meta
 
-            # Render the page.html template then write to HTML file
+            # Render the page template then write to HTML file
             page_html = template.render(base_url=self.repo_url, data=meta, content=html)
 
             parts = list(path.parts)
@@ -62,57 +65,16 @@ class Builder:
             with page_path.open('w') as f:
                 f.write(page_html)
 
-            # Get page dictionary for index.html template
+            # Store dictionaries for category pages
             if len(parts) > 2:
+
+                # Get page dictionary for index template
                 section = parts[1]
                 link = f'/{parts[1]}/{parts[2].replace("md", "html")}'
                 title = meta['title'][0]
                 pages.append({'section': section, 'link': link, 'title': title})
 
-            # Reset the Markdown parser
-            md.reset()
-
-        return pages
-
-    def build_index(self, md, template, pages):
-        """
-        Build the index.html page.
-        """
-
-        # Sort page dictionaries using section and title
-        sorted_pages = sorted(pages, key=itemgetter('section', 'title'))
-
-        # Render the index.html template then write to HTML file
-        index_html = template.render(base_url=self.repo_url, pages=sorted_pages)
-        index_path = Path(f'{self.output_dir}/index.html')
-
-        with index_path.open('w') as f:
-            f.write(index_html)
-
-        # Reset the Markdown parser
-        md.reset()
-
-    def build_feed(self, md, template):
-        """
-        Build the JSON feed.
-        """
-
-        # Store feed dictionaries for feed.json template
-        feeds = []
-
-        # Parse the Markdown files and get metadata for each page
-        for path in Path(self.input_dir).glob('**/*.md'):
-
-            parts = list(path.parts)
-
-            if len(parts) == 3:
-
-                with path.open() as f:
-                    mdtext = f.read()
-
-                html = md.convert(mdtext)
-                meta = md.Meta
-
+                # Get feed dictionary for feed template
                 soup = BeautifulSoup(html, 'html.parser')
                 url = f'{self.base_url}/{parts[1]}/{parts[2].replace("md", "html")}'
 
@@ -123,10 +85,38 @@ class Builder:
                     'date': datetime.strptime(meta['date'][0], '%B %d, %Y').isoformat() + 'Z'
                 })
 
+            # Reset the Markdown parser
+            md.reset()
+
+        return pages, feeds
+
+    def build_index(self, md, template, pages):
+        """
+        Build the index.html page.
+        """
+
+        # Sort page dictionaries using section and title
+        sorted_pages = sorted(pages, key=itemgetter('section', 'title'))
+
+        # Render the index template then write to HTML file
+        index_html = template.render(base_url=self.repo_url, pages=sorted_pages)
+        index_path = Path(f'{self.output_dir}/index.html')
+
+        with index_path.open('w') as f:
+            f.write(index_html)
+
+        # Reset the Markdown parser
+        md.reset()
+
+    def build_feed(self, md, template, feeds):
+        """
+        Build the JSON feed.
+        """
+
         # Sort feed dictionaries using date
         sorted_feeds = sorted(feeds, key=itemgetter('date'), reverse=True)
 
-        # Write feed.json to output directory
+        # Render the feed template then write to JSON file
         feed_json = template.render(feeds=sorted_feeds)
         feed_path = Path(f'{self.output_dir}/feed.json')
 

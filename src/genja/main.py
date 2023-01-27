@@ -44,9 +44,9 @@ def main():
 
     # Build the HTML pages and JSON feed
     builder = Builder(config, args.command)
-    pages = builder.build_pages(md, page_template)
+    pages, feeds = builder.build_pages(md, page_template)
     builder.build_index(md, index_template, pages)
-    builder.build_feed(md, feed_template)
+    builder.build_feed(md, feed_template, feeds)
 
     # Run a local server and open browser if run command is `serve`
     if args.command == 'serve':
