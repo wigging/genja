@@ -6,10 +6,9 @@ from bs4 import BeautifulSoup
 
 class Builder:
 
-    def __init__(self, config):
+    def __init__(self, config, command):
 
         # Get configuration
-        command = config['command']
         base_url = config['base_url']
         repo_name = config['repo_name']
         input_dir = config['input_dir']
@@ -21,7 +20,7 @@ class Builder:
         self.input_dir = input_dir
         self.output_dir = output_dir
 
-        # Set base url attribute based on run command
+        # Set repo url attribute based on run command
         if command == 'serve':
             self.repo_url = ''
         else:

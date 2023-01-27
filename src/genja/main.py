@@ -27,9 +27,7 @@ def main():
     with open("config.json") as json_file:
         config = json.load(json_file)
 
-    config['command'] = args.command
-
-    print(f'\n{"Command ":.<30} {config["command"]}')
+    print(f'\n{"Command ":.<30} {args.command}')
     print(f'{"Base URL ":.<30} {config["base_url"]}')
     print(f'{"Repository name ":.<30} {config["repo_name"]}')
     print(f'{"Input directory ":.<30} {config["input_dir"]}')
@@ -45,11 +43,11 @@ def main():
     feed_template = env.get_template('feed.json')
 
     # Build the HTML pages and JSON feed
-    builder = Builder(config)
+    builder = Builder(config, args.command)
     pages = builder.build_pages(md, page_template)
     builder.build_index(md, index_template, pages)
     builder.build_feed(md, feed_template)
 
     # Run a local server and open browser if run command is `serve`
-    if config['command'] == 'serve':
+    if args.command == 'serve':
         run_server(config['output_dir'])
