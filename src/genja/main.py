@@ -8,9 +8,7 @@ import json
 from jinja2 import Environment, FileSystemLoader
 from importlib.metadata import version
 
-from .build_index import build_index
-from .build_pages import build_pages
-from .build_feed import build_feed
+from .builder import Builder
 from .run_server import run_server
 
 
@@ -42,14 +40,15 @@ def main():
 
     # Setup the jinja template environment
     env = Environment(loader=FileSystemLoader('templates'), trim_blocks=True, lstrip_blocks=True)
-    index_template = env.get_template('index.html')
     page_template = env.get_template('page.html')
+    index_template = env.get_template('index.html')
     feed_template = env.get_template('feed.json')
 
-    # Build the HTML index and pages
-    build_index(config, md, index_template)
-    build_pages(config, md, page_template)
-    build_feed(config, md, feed_template)
+    # Build the HTML pages and JSON feed
+    builder = Builder(config)
+    pages = builder.build_pages(md, page_template)
+    builder.build_index(md, index_template, pages)
+    builder.build_feed(md, feed_template)
 
     # Run a local server and open browser if run command is `serve`
     if config['command'] == 'serve':
