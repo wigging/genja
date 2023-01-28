@@ -84,7 +84,7 @@ class Builder:
 
         return pages, feeds
 
-    def build_index(self, md, template, pages):
+    def build_index(self, template, pages):
         """
         Build the index.html page.
         """
@@ -99,10 +99,7 @@ class Builder:
         with index_path.open('w') as f:
             f.write(index_html)
 
-        # Reset the Markdown parser
-        md.reset()
-
-    def build_feed(self, md, template, feeds):
+    def build_feed(self, template, feeds):
         """
         Build the JSON feed.
         """
@@ -116,6 +113,3 @@ class Builder:
 
         with feed_path.open('w') as f:
             f.write(feed_json)
-
-        # Reset the Markdown parser
-        md.reset()
