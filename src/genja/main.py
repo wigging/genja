@@ -9,7 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 from importlib.metadata import version
 
 from .builder import Builder
-from .run_server import run_server
+from .server import run_server
 
 
 def main():
