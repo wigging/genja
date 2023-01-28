@@ -8,23 +8,17 @@ class Builder:
 
     def __init__(self, config, command):
 
-        # Get configuration
-        base_url = config['base_url']
-        repo_name = config['repo_name']
-        input_dir = config['input_dir']
-        output_dir = config['output_dir']
-
         # Set attributes
         self.command = command
-        self.base_url = base_url
-        self.input_dir = input_dir
-        self.output_dir = output_dir
+        self.base_url = config['base_url']
+        self.input_dir = config['input_dir']
+        self.output_dir = config['output_dir']
 
         # Set repo url attribute based on run command
         if command == 'serve':
             self.repo_url = ''
         else:
-            self.repo_url = '/' + repo_name
+            self.repo_url = '/' + config['repo_name']
 
     def build_pages(self, md, template):
         """
@@ -55,7 +49,7 @@ class Builder:
             meta = md.Meta
 
             # Render the page template then write to HTML file
-            page_html = template.render(base_url=self.repo_url, data=meta, content=html)
+            page_html = template.render(repo_url=self.repo_url, meta=meta, content=html)
 
             parts = list(path.parts)
             parts[0] = self.output_dir
@@ -99,7 +93,7 @@ class Builder:
         sorted_pages = sorted(pages, key=itemgetter('section', 'title'))
 
         # Render the index template then write to HTML file
-        index_html = template.render(base_url=self.repo_url, pages=sorted_pages)
+        index_html = template.render(repo_url=self.repo_url, pages=sorted_pages)
         index_path = Path(f'{self.output_dir}/index.html')
 
         with index_path.open('w') as f:
