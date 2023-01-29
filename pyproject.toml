@@ -4,9 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genja"
-version = "22.11"
+version = "23.1"
 authors = [{name = "Gavin Wiggins"}]
-description = "Generate HTML files from Markdown files"
+description = "Static site generator for GitHub Pages"
 readme = "README.md"
 dependencies = ["markdown", "jinja2", "beautifulsoup4"]
 classifiers = [
