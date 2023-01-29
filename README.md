@@ -1,6 +1,6 @@
 # Genja
 
-Genja is a simple command line tool that generates HTML files from Markdown files.
+Genja is a simple static site generator for GitHub Pages. It is a command line tool built in Python that generates HTML files and a JSON feed from Markdown content.
 
 ## Installation
 
@@ -13,45 +13,52 @@ pip install genja
 Check the installed version from the command line:
 
 ```
-$ genja --version
-22.11
+genja --version
 ```
 
 ## Usage
 
-Run genja from the command line by providing the input and output directories as arguments. The input directory contains the Markdown files and must contain a [Jinja](https://jinja.palletsprojects.com/) template file named `template.html`. This template is used to render the generated HTML files. The output directory is where the generated HTML files are written.
-
-```bash
-# Run genja where input is `content` directory and output is `website` directory.
-# Input directory contains the Markdown files and Jinja template.
-# Output directory contains the generated HTML files.
-genja content website
-```
-
-Output from running the help command `genja --help` is shown below.
+Before running genja, you must create a project structure as shown below. The `content/` directory contains Markdown files that are parsed by genja to create HTML files. The `templates/` directory includes [Jinja](https://jinja.palletsprojects.com/) templates that are used to render the HTML pages. The `docs/` directory contains the built website which can be hosted with GitHub Pages. Lastly, the `config.json` defines the URLs and directories used by genja.
 
 ```
-usage: genja [-h] [-v] input output
+mywebsite/
+|- content/
+|- templates/
+|- docs/
+|- config.json
+```
 
-Generate HTML files from Markdown files.
+The `config.json` format is shown below. The `base_url` is the URL for the homepage of the website. The `repo_name` is the name of the GitHub repository for the project. Markdown files that are parsed by genja are located in the `input_dir` directory. The HTML files generated from genja are located in the `output_dir` directory. Static content such as images and CSS files should go in the output directory.
 
-positional arguments:
-  input          directory of Markdown files and Jinja template
-  output         directory for generated HTML files
+```json
+{
+    "base_url": "https://example.com/mywebsite",
+    "repo_name": "mywebsite",
+    "input_dir": "content",
+    "output_dir": "docs"
+}
+```
 
-options:
-  -h, --help     show this help message and exit
-  -v, --version  show program's version number and exit
+Use the `serve` command to view the website in the default browser.
+
+```
+genja serve
+```
+
+Use the `build` command to build the website for hosting with GitHub Pages.
+
+```
+genja build
 ```
 
 ## Example
 
-To run the example, go to the example directory in this repository. Use the `mdcontent` as the input directory and the `website` as the output directory. Notice the template file used by genja is located in the `mdcontent` directory. The index file links to the generated HTML pages. The template and index files are created by the user, not by genja.
+To run the example, go to the `example` directory in this repository. The `mdcontent` is the input directory containing the Mardkown files. The `website` is the output directory containing the built HTML files.
 
 ```bash
-# Run the example
+# Serve the example website
 cd example
-genja mdcontent website
+genja serve
 ```
 
 ## Contributing

@@ -1,5 +1,5 @@
 """
-Generate HTML files from Markdown files.
+Static site generator for GitHub Pages.
 """
 
 import argparse
@@ -18,7 +18,7 @@ def main():
     """
 
     # Command line arguments
-    parser = argparse.ArgumentParser(description='Generate HTML files from Markdown files.')
+    parser = argparse.ArgumentParser(description='Static site generator for GitHub Pages.')
     parser.add_argument('command', choices=['build', 'serve'], help='build or serve website')
     parser.add_argument('-v', '--version', action='version', version=version('genja'))
     args = parser.parse_args()
