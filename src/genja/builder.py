@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from pathlib import Path
 from operator import itemgetter
@@ -71,11 +72,12 @@ class Builder:
                 # Get feed dictionary for feed template
                 soup = BeautifulSoup(html, 'html.parser')
                 url = f'{self.base_url}/{parts[1]}/{parts[2].replace("md", "html")}'
+                cont_reading = f'<p><a href="{url}">Continue reading...</a></p>'
 
                 feeds.append({
                     'url': url,
                     'title': meta['title'][0],
-                    'html': soup.p,
+                    'html': json.dumps(str(soup.p) + cont_reading),
                     'date': datetime.strptime(meta['date'][0], '%B %d, %Y').isoformat() + 'Z'
                 })
 
