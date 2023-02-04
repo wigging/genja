@@ -82,6 +82,10 @@ conda env create --file environment.yml
 conda activate genja
 ```
 
+## Support
+
+Support this project by using the **:heart: Sponsor** button at the top of this page. Thank you :smile:.
+
 ## License
 
 This project is licensed under the terms of the MIT license. See [here](LICENSE.md) for the license text.
