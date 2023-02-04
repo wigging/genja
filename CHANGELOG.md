@@ -2,6 +2,17 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v23.2
+
+#### Fixed
+
+- In the example, use relative paths in Markdown and HTML templates
+- Ensure relative paths are used within genja
+
+#### Removed
+
+- Remove the repo_name item from the config.json
+
 ## Genja v23.1
 
 Breaking changes in this release. Please upgrade from the previous version.
