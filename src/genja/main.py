@@ -29,7 +29,6 @@ def main():
 
     print(f'\n{"Command ":.<30} {args.command}')
     print(f'{"Base URL ":.<30} {config["base_url"]}')
-    print(f'{"Repository name ":.<30} {config["repo_name"]}')
     print(f'{"Input directory ":.<30} {config["input_dir"]}')
     print(f'{"Output directory ":.<30} {config["output_dir"]}')
 
@@ -43,7 +42,7 @@ def main():
     feed_template = env.get_template('feed.json')
 
     # Build the HTML pages and JSON feed
-    builder = Builder(config, args.command)
+    builder = Builder(config)
     pages, feeds = builder.build_pages(md, page_template)
     builder.build_index(index_template, pages)
     builder.build_feed(feed_template, feeds)

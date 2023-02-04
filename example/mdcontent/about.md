@@ -19,6 +19,6 @@ Done.
 
 Below is an image.
 
-![the image](/img/photo.jpg)
+![the image](img/photo.jpg)
 
 Done again.
