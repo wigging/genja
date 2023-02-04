@@ -18,7 +18,7 @@ genja --version
 
 ## Usage
 
-Before running genja, you must create a project structure as shown below. The `content/` directory contains Markdown files that are parsed by genja to create HTML files. The `templates/` directory includes [Jinja](https://jinja.palletsprojects.com/) templates that are used to render the HTML pages. The `docs/` directory contains the built website which can be hosted with GitHub Pages. Lastly, the `config.json` defines the URLs and directories used by genja.
+Before running genja, create a project structure as shown below. The `content` directory contains Markdown files that are used to generate HTML files. The `templates` directory contains [Jinja](https://jinja.palletsprojects.com/) templates that are used to render the HTML pages. The `docs` directory contains the built website which can be hosted with GitHub Pages. Lastly, the `config.json` defines the URLs and directories for the project.
 
 ```
 mywebsite/
@@ -28,24 +28,23 @@ mywebsite/
 |- config.json
 ```
 
-The `config.json` format is shown below. The `base_url` is the URL for the homepage of the website. The `repo_name` is the name of the GitHub repository for the project. Markdown files that are parsed by genja are located in the `input_dir` directory. The HTML files generated from genja are located in the `output_dir` directory. Static content such as images and CSS files should go in the output directory.
+The items in the `config.json` are shown below. The `base_url` is the URL for the homepage of the website. Markdown files that are parsed by genja are located in the `input_dir` directory. The HTML files generated from genja are located in the `output_dir` directory. Static content such as images and CSS files should go in the output directory.
 
 ```json
 {
     "base_url": "https://example.com/mywebsite",
-    "repo_name": "mywebsite",
     "input_dir": "content",
     "output_dir": "docs"
 }
 ```
 
-Use the `serve` command to view the website in the default browser.
+Use the serve command to view the website in the default browser.
 
 ```
 genja serve
 ```
 
-Use the `build` command to build the website for hosting with GitHub Pages.
+Use the build command to build the website for hosting with GitHub Pages.
 
 ```
 genja build
@@ -53,12 +52,18 @@ genja build
 
 ## Example
 
-To run the example, go to the `example` directory in this repository. The `mdcontent` is the input directory containing the Mardkown files. The `website` is the output directory containing the built HTML files.
+To run the example, go to the `example` directory in this repository. The `mdcontent` is the input directory containing the Mardkown files. The `website` is the output directory containing the built HTML files. Use the commands shown below to serve the generated website and open a web browser.
 
-```bash
-# Serve the example website
+```
 cd example
 genja serve
+```
+
+Use the commands shown below to build the example website without starting a server.
+
+```bash
+cd example
+genja build
 ```
 
 ## Contributing
