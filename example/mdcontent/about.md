@@ -5,10 +5,13 @@ date: 1989
 
 # About me
 
-These are my first notes in this document
+These are my first notes in this document right here and now I'm done.
 
 ```python
 def sayhello():
+    """
+    Example function that prints a string.
+    """
     s = 'Hello there'
     print(s)
 ```

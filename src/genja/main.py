@@ -24,7 +24,7 @@ def main():
     args = parser.parse_args()
 
     # Get configuration from JSON file
-    with open("config.json") as json_file:
+    with open('config.json') as json_file:
         config = json.load(json_file)
 
     print(f'\n{"Command ":.<30} {args.command}')
@@ -49,4 +49,4 @@ def main():
 
     # Run a local server and open browser if run command is `serve`
     if args.command == 'serve':
-        run_server(config['output_dir'])
+        run_server(config)
