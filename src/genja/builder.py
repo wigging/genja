@@ -16,7 +16,7 @@ class Builder:
 
     def build_pages(self, md, template):
         """
-        Build root and section HTML pages from Markdown files.
+        Build root and category HTML pages from Markdown files.
         """
 
         # Store page dictionaries for index template
@@ -55,10 +55,10 @@ class Builder:
             if len(parts) > 2:
 
                 # Get page dictionary for index template
-                section = parts[1]
+                category = parts[1]
                 link = f'{parts[1]}/{parts[2].replace("md", "html")}'
                 title = meta['title'][0]
-                pages.append({'section': section, 'link': link, 'title': title})
+                pages.append({'category': category, 'link': link, 'title': title})
 
                 # Get feed dictionary for feed template
                 soup = BeautifulSoup(html, 'html.parser')
@@ -82,8 +82,8 @@ class Builder:
         Build the index.html page.
         """
 
-        # Sort page dictionaries using section and title
-        sorted_pages = sorted(pages, key=itemgetter('section', 'title'))
+        # Sort page dictionaries using category and title
+        sorted_pages = sorted(pages, key=itemgetter('category', 'title'))
 
         # Render the index template then write to HTML file
         index_html = template.render(pages=sorted_pages)

@@ -30,7 +30,7 @@
         <h2>Cars</h2>
         <ul>
         {% for page in pages %}
-        {% if page.section == 'cars' %}
+        {% if page.category == 'cars' %}
             <li><a href="{{ page.link }}">{{ page.title }}</a></li>
         {% endif %}
         {% endfor %}
@@ -39,7 +39,7 @@
         <h2>Trucks</h2>
         <ul>
         {% for page in pages %}
-        {% if page.section == 'trucks' %}
+        {% if page.category == 'trucks' %}
             <li><a href="{{ page.link }}">{{ page.title }}</a></li>
         {% endif %}
         {% endfor %}
