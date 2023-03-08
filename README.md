@@ -38,13 +38,13 @@ The items in the `config.json` are shown below. The `base_url` is the URL for th
 }
 ```
 
-Use the serve command to view the website in the default browser.
+Use the serve command to build the website and start a local server. This will automatically open the default web browser to view the website. The website will automatically reload when changes are saved to the Markdown files.
 
 ```
 genja serve
 ```
 
-Use the build command to build the website for hosting with GitHub Pages.
+Use the build command to build the website without running a local server.
 
 ```
 genja build
@@ -52,16 +52,16 @@ genja build
 
 ## Example
 
-To run the example, go to the `example` directory in this repository. The `mdcontent` is the input directory containing the Mardkown files. The `website` is the output directory containing the built HTML files. Use the commands shown below to serve the generated website and open a web browser.
+To run the example, go to the `example` directory in this repository. The `mdcontent` folder is the input directory containing the Mardkown files. The `website` folder is the output directory containing the built HTML files. Use the commands shown below to build the website and run a local server to view the website in the default web browser. The website will automatically reload in the web browser when changes are saved to the Markdown files.
 
 ```
 cd example
 genja serve
 ```
 
-Use the commands shown below to build the example website without starting a server.
+Use the commands shown below to build the example website without starting a local server.
 
-```bash
+```
 cd example
 genja build
 ```
@@ -71,7 +71,7 @@ genja build
 Clone this repository and use the conda environment file to create a Python environment for developing genja. This environment uses [flake8](https://github.com/PyCQA/flake8) for linting and [pytest](https://github.com/pytest-dev/pytest) for running tests. Genja is installed in editable mode within the environment.
 
 ```bash
-# Clone the project
+# Clone this project
 git clone https://github.com/wigging/genja.git
 
 # Create the conda environment
