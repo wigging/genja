@@ -23,23 +23,21 @@
         <div class="col-md">
 
         <h1>My Website</h1>
-        <p>Hello, welcome to my website.</p>
-        <p>More information on the <a href="about.html">About</a> page.</p>
-        <p>Use the <a href="contact.html">Contact</a> page to reach me.</p>
+        <p>Hello, welcome to my website about fruits and vegetables. More information is available on the <a href="about.html">About</a> page. Use the <a href="contact.html">Contact</a> page to reach me.</p>
 
-        <h2>Cars</h2>
+        <h2>Fruits</h2>
         <ul>
         {% for page in pages %}
-        {% if page.category == 'cars' %}
+        {% if page.category == 'fruits' %}
             <li><a href="{{ page.link }}">{{ page.title }}</a></li>
         {% endif %}
         {% endfor %}
         </ul>
 
-        <h2>Trucks</h2>
+        <h2>Vegetables</h2>
         <ul>
         {% for page in pages %}
-        {% if page.category == 'trucks' %}
+        {% if page.category == 'veggies' %}
             <li><a href="{{ page.link }}">{{ page.title }}</a></li>
         {% endif %}
         {% endfor %}

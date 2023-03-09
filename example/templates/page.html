@@ -22,11 +22,13 @@
     <div class="row">
         <div class="col-md">
 
+            <h2 class="mt-4">{{ meta['title'][0] }}</h2>
+
+            {% if meta['date'] %}
+                <h6>Written on {{ meta['date'][0] }}</h6>
+            {% endif %}
+
             {{ content }}
-
-            <h5>This page title is {{ meta['title'][0] }}.</h5>
-
-            <h5>This page date is {{ meta['date'][0] }}.</h5>
 
         </div>
     </div>
