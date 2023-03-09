@@ -2,6 +2,18 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v23.3
+
+Breaking changes are in this release so please upgrade from previous versions.
+
+#### Added
+
+- The `genja serve` command now runs a local server using the livereload package. This will automatically reload the website in the browser when changes to the Markdown files are saved.
+
+#### Changed
+
+- Folders in the input directory are considered categories instead of sections. Consequently, the index template must use the `page.category` variable instead of `page.section`.
+
 ## Genja v23.2
 
 #### Fixed
