@@ -2,6 +2,10 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v23.12
+
+here
+
 ## Genja v23.3
 
 Breaking changes are in this release so please upgrade from previous versions.

@@ -68,7 +68,7 @@ genja build
 
 ## Contributing
 
-Clone this repository and use the conda environment file to create a Python environment for developing genja. This environment uses [flake8](https://github.com/PyCQA/flake8) for linting and [pytest](https://github.com/pytest-dev/pytest) for running tests. Genja is installed in editable mode within the environment.
+Clone this repository and use the conda environment file to create a Python environment for developing genja. This environment uses [ruff](https://docs.astral.sh/ruff/) for linting and formatting along with [pytest](https://docs.pytest.org) for running tests. Genja is installed in editable mode within the environment.
 
 ```bash
 # Clone this project
