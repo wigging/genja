@@ -25,6 +25,16 @@
         <h1>My Website</h1>
         <p>Hello, welcome to my website about fruits and vegetables. More information is available on the <a href="about.html">About</a> page. Use the <a href="contact.html">Contact</a> page to reach me.</p>
 
+        <h2>Recents</h2>
+        <p>The most recent five articles.</p>
+        <ul>
+        {% for page in recents %}
+        {% if loop.index is lt 6 %}
+            <li><a href="{{ page.link }}">{{ page.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+
         <h2>Fruits</h2>
         <ul>
         {% for page in pages %}
