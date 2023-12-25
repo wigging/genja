@@ -21,14 +21,14 @@ def run_server(config):
     """
 
     # Get the input and output directories
-    input_dir = config['input_dir']
-    output_dir = config['output_dir']
+    input_dir = config["input_dir"]
+    output_dir = config["output_dir"]
 
     # Open web browser to view website on localhost port
-    webbrowser.open('http://localhost:5500')
+    webbrowser.open("http://localhost:5500")
 
     # Serve the website from the output directory and automatically reload it
     # when changes occur in the input directory
     server = Server()
-    server.watch(input_dir, 'genja build')
+    server.watch(input_dir, "genja build")
     server.serve(root=output_dir)
