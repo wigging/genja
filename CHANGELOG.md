@@ -4,7 +4,13 @@ All notable changes to the genja project are documented in this file. The format
 
 ## Genja v23.12
 
-here
+#### Added
+
+- A `recents` variable for the index template. This can be used to create a list on the home page for recent articles. See the example for a demonstration.
+
+#### Changed
+
+- Change from flake8 to ruff for linting and formating
 
 ## Genja v23.3
 
