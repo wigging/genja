@@ -24,3 +24,7 @@ genja = "genja.main:main"
 
 [tool.ruff]
 line-length = 100
+
+[tool.ruff.lint]
+extend-select = ["E501", "D"]
+ignore = ["D200", "D202", "D212"]

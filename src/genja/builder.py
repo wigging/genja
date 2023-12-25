@@ -1,3 +1,7 @@
+"""
+Builder class with methods to build the HTML pages and JSON feed.
+"""
+
 import json
 from datetime import datetime
 from pathlib import Path
@@ -6,7 +10,8 @@ from bs4 import BeautifulSoup
 
 
 class Builder:
-    """Builder class to create HTML pages and JSON feed.
+    """
+    Builder class to create HTML pages and JSON feed.
 
     Attributes
     ----------
@@ -19,7 +24,9 @@ class Builder:
     """
 
     def __init__(self, config: dict[str, str]):
-        # Set attributes
+        """
+        Initialize with the config dictionary.
+        """
         self.base_url = config["base_url"]
         self.input_dir = config["input_dir"]
         self.output_dir = config["output_dir"]
@@ -27,13 +34,17 @@ class Builder:
     def build_pages(self, md, template):
         """
         Build root and category HTML pages from Markdown files.
+
+        Parameters
+        ----------
+        md : x
+            Here
+        template : x
+            Here
         """
 
-        # Store page dictionaries for index template
-        pages = []
-
-        # Store feed dictionaries for feed template
-        feeds = []
+        pages = []  # Store page dictionaries for index template
+        feeds = []  # Store feed dictionaries for feed template
 
         # Parse the Markdown files and build HTML pages
         for path in Path(self.input_dir).glob("**/*.md"):
@@ -86,7 +97,7 @@ class Builder:
 
     def build_index(self, template, pages):
         """
-        Build the index.html page.
+        Build the index HTML page.
         """
 
         # Sort page dictionaries using category and title

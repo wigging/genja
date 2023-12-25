@@ -14,7 +14,7 @@ from .server import run_server
 
 def main():
     """
-    Main driver to run the genja program.
+    Run the genja program.
     """
 
     # Command line arguments
