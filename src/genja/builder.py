@@ -34,15 +34,7 @@ class Builder:
     def build_pages(self, md, template):
         """
         Build root and category HTML pages from Markdown files.
-
-        Parameters
-        ----------
-        md : x
-            Here
-        template : x
-            Here
         """
-
         pages = []  # Store page dictionaries for index template
         feeds = []  # Store feed dictionaries for feed template
 
@@ -61,15 +53,6 @@ class Builder:
             # Get path parts and create the HTML path
             parts = list(path.parts)
             parts[0] = self.output_dir
-            page_path = Path(*parts).with_suffix(".html")
-            page_path.parent.mkdir(parents=True, exist_ok=True)
-
-            # Render the page template then write to HTML file
-            catpage = True if len(parts) > 2 else False
-            page_html = template.render(meta=meta, content=html, catpage=catpage)
-
-            with page_path.open("w") as f:
-                f.write(page_html)
 
             # Store dictionaries for category pages
             if len(parts) > 2:
@@ -89,6 +72,19 @@ class Builder:
                 html_str = json.dumps(str(soup.p) + cont_reading)
 
                 feeds.append({"url": url, "title": title, "html": html_str, "date": iso_date})
+            else:
+                url = f'{self.base_url}/{parts[1].replace("md", "html")}'
+
+            # Render the page template then write to HTML file
+            catpage = True if len(parts) > 2 else False
+            meta["page_url"] = url
+            page_html = template.render(meta=meta, content=html, catpage=catpage)
+
+            page_path = Path(*parts).with_suffix(".html")
+            page_path.parent.mkdir(parents=True, exist_ok=True)
+
+            with page_path.open("w") as f:
+                f.write(page_html)
 
             # Reset the Markdown parser
             md.reset()
