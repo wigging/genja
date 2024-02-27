@@ -6,7 +6,7 @@ All notable changes to the genja project are documented in this file. The format
 
 #### Added
 
-- The `meta["page_url"]` is now available for page templates. This provides the URL for the page which can be used in things like [Open Graph](https://www.opengraph.xyz) meta tags.
+- The `meta["url"]` is now available for page templates. This provides the URL for the page which can be used in things like [Open Graph](https://www.opengraph.xyz) meta tags.
 - Example includes Open Graph meta tags in head section
 
 ## Genja v23.12

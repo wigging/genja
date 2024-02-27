@@ -77,7 +77,7 @@ class Builder:
 
             # Render the page template then write to HTML file
             catpage = True if len(parts) > 2 else False
-            meta["page_url"] = url
+            meta["url"] = url
             page_html = template.render(meta=meta, content=html, catpage=catpage)
 
             page_path = Path(*parts).with_suffix(".html")
