@@ -1,9 +1,18 @@
 """
-Tests for version number.
+Tests for the command line interface (CLI).
 """
 
 import subprocess
 from importlib.metadata import version
+
+
+def test_inputs():
+    """
+    Test for error if no inputs are given.
+    """
+    capture = subprocess.run("genja", shell=True, capture_output=True)
+    returncode = capture.returncode
+    assert returncode == 2
 
 
 def test_version():
