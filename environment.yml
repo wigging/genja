@@ -20,7 +20,9 @@ dependencies:
   - twine
   - pip
   - pip:
-    - ruff
-    - livereload
+    - furo
     - ipdb
+    - livereload
+    - ruff
+    - sphinx
     - --editable .
