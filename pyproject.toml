@@ -16,6 +16,9 @@ classifiers = [
 ]
 license = "MIT"
 
+[project.optional-dependencies]
+docs = ["furo", "sphinx"]
+
 [project.urls]
 "Homepage" = "https://github.com/wigging/genja"
 
