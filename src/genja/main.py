@@ -5,8 +5,9 @@ Static site generator for GitHub Pages.
 import argparse
 import markdown
 import json
-from jinja2 import Environment, FileSystemLoader
 from importlib.metadata import version
+from jinja2 import Environment, FileSystemLoader
+from pathlib import Path
 
 from .builder import Builder
 from .server import run_server
@@ -18,8 +19,8 @@ def main():
     """
 
     # Command line arguments
-    parser = argparse.ArgumentParser(description="Static site generator for GitHub Pages.")
-    parser.add_argument("command", choices=["build", "serve"], help="build or serve website")
+    parser = argparse.ArgumentParser(description="Genja static site generator for GitHub Pages")
+    parser.add_argument("command", choices=["build", "serve", "clean"], help="genja commands")
     parser.add_argument("-v", "--version", action="version", version=version("genja"))
     args = parser.parse_args()
 
@@ -47,6 +48,17 @@ def main():
     builder.build_index(index_template, pages)
     builder.build_feed(feed_template, feeds)
 
-    # Run a local server and open browser if run command is `serve`
+    # Run a local server and open web browser
     if args.command == "serve":
         run_server(config)
+
+    # Clean up (remove) all HTML files and the feed.json file in output directory
+    if args.command == "clean":
+        output_path = Path(config["output_dir"])
+
+        Path(output_path / "feed.json").unlink()
+
+        for html_file in output_path.glob("**/*.html"):
+            html_file.unlink()
+
+        print(f"\nRemoved all HTML files and feed.json in {output_path} directory.")
