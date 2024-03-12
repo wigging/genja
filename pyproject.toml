@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genja"
-version = "24.2"
+version = "24.3"
 authors = [{name = "Gavin Wiggins"}]
 description = "Static site generator for GitHub Pages"
 readme = "README.md"
