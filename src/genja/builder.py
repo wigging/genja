@@ -1,6 +1,4 @@
-"""
-Builder class with methods to build the HTML pages and JSON feed.
-"""
+"""Builder class with methods to build the HTML pages and JSON feed."""
 
 import json
 from datetime import datetime
@@ -10,8 +8,7 @@ from bs4 import BeautifulSoup
 
 
 class Builder:
-    """
-    Builder class to create HTML pages and JSON feed.
+    """Builder class to create HTML pages and JSON feed.
 
     Attributes
     ----------
@@ -24,19 +21,16 @@ class Builder:
     """
 
     def __init__(self, config: dict[str, str]):
-        """
-        Initialize with the config dictionary.
-        """
+        """Initialize with the config dictionary."""
         self.base_url = config["base_url"]
         self.input_dir = config["input_dir"]
         self.output_dir = config["output_dir"]
 
-    def build_markdown_pages(self, md, template):
-        """
-        Build the Markdown HTML pages.
-        """
-        pages = []  # Store page dictionaries for index template
-        feeds = []  # Store feed dictionaries for feed template
+    def build_markdown_pages(self, template, md):
+        """Build the Markdown HTML pages."""
+
+        pages = []  # Store page dictionaries for Markdown and HTML templates
+        feeds = []  # Store feed dictionaries for JSON feed template
 
         # Parse the Markdown files and build HTML pages
         for path in Path(self.input_dir).glob("**/*.md"):
@@ -91,9 +85,18 @@ class Builder:
 
         return pages, feeds
 
-    def build_html_pages(self, template, pages):
-        """
-        Build the regular HTML pages.
+    def build_html_pages(self, templates, names, pages):
+        """Build the other HTML pages.
+
+        Parameters
+        ----------
+        templates : list of jinja templates
+            The templates used to render each HTML file.
+        names : list of str
+            HTML file names associated with the templates. These file names
+            are written to the output directory.
+        pages : list of dict
+            The dictionaries that describe the Markdown pages.
         """
 
         # Sort page dictionaries using category and title
@@ -103,16 +106,15 @@ class Builder:
         recent_pages = sorted(pages, key=itemgetter("date"), reverse=True)
 
         # Render the index template then write to HTML file
-        index_html = template.render(pages=sorted_pages, recents=recent_pages)
-        index_path = Path(f"{self.output_dir}/index.html")
+        for template, name in zip(templates, names):
+            html_render = template.render(pages=sorted_pages, recents=recent_pages)
+            html_path = Path(f"{self.output_dir}/{name}")
 
-        with index_path.open("w") as f:
-            f.write(index_html)
+            with html_path.open("w") as f:
+                f.write(html_render)
 
     def build_json_feed(self, template, feeds):
-        """
-        Build the JSON feed.
-        """
+        """Build the JSON feed."""
 
         # Sort feed dictionaries using date
         sorted_feeds = sorted(feeds, key=itemgetter("date"), reverse=True)

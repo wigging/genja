@@ -1,14 +1,11 @@
-"""
-Function to run a server.
-"""
+"""Function to run a server."""
 
 import webbrowser
 from livereload import Server
 
 
 def run_server(config):
-    """
-    Run a local web server.
+    """Run a local web server.
 
     Run a local web server and open a browser to view the website. The website
     is automatically reloaded when changes occur in the input directory.

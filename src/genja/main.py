@@ -1,6 +1,4 @@
-"""
-Static site generator for GitHub Pages.
-"""
+"""Static site generator for GitHub Pages."""
 
 import argparse
 import markdown
@@ -14,9 +12,7 @@ from .server import run_server
 
 
 def main():
-    """
-    Run the genja program.
-    """
+    """Run the genja program."""
 
     # Command line arguments
     parser = argparse.ArgumentParser(description="Genja static site generator for GitHub Pages")
@@ -36,16 +32,25 @@ def main():
     # Setup the Markdown converter
     md = markdown.Markdown(extensions=["meta", "fenced_code"])
 
-    # Setup the jinja template environment
+    # Setup the jinja template environment and get the Markdown and JSON templates
     env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True, lstrip_blocks=True)
-    md_template = env.get_template("page.html")
-    html_template = env.get_template("index.html")
+    md_template = env.get_template("markdown.html")
     json_template = env.get_template("feed.json")
 
-    # Build the HTML pages and JSON feed
+    # Get the HTML file names and templates
+    html_names = []
+    html_templates = []
+
+    for f in Path("templates").glob("*.html"):
+        if f.name != "markdown.html":
+            html_template = env.get_template(f.name)
+            html_templates.append(html_template)
+            html_names.append(f.name)
+
+    # Build the Markdown pages, HTML pages, and JSON feed
     builder = Builder(config)
-    pages, feeds = builder.build_markdown_pages(md, md_template)
-    builder.build_html_pages(html_template, pages)
+    md_pages, feeds = builder.build_markdown_pages(md_template, md)
+    builder.build_html_pages(html_templates, html_names, md_pages)
     builder.build_json_feed(json_template, feeds)
 
     # Run a local server and open web browser
