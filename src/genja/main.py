@@ -73,10 +73,14 @@ def main():
     # Clean up (remove) all HTML files and the feed.json file in output directory
     if args.command == "clean":
         output_path = Path(config["output_dir"])
+        template_path = Path(config["template_dir"])
 
         Path(output_path / "feed.json").unlink()
 
-        for html_file in output_path.glob("[!_]**/*.html"):
-            html_file.unlink()
+        for html_path in output_path.glob("**/*.html"):
+            if config["output_dir"] != ".":
+                html_path.unlink()
+            elif html_path.parent != template_path and html_path.name != "index.html":
+                html_path.unlink()
 
         print(f"\nRemoved all HTML files and feed.json in `{output_path}` directory.")
