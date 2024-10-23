@@ -38,15 +38,15 @@ def main():
 
     # Setup the jinja template environment
     env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True, lstrip_blocks=True)
-    page_template = env.get_template("page.html")
-    index_template = env.get_template("index.html")
-    feed_template = env.get_template("feed.json")
+    md_template = env.get_template("page.html")
+    html_template = env.get_template("index.html")
+    json_template = env.get_template("feed.json")
 
     # Build the HTML pages and JSON feed
     builder = Builder(config)
-    pages, feeds = builder.build_pages(md, page_template)
-    builder.build_index(index_template, pages)
-    builder.build_feed(feed_template, feeds)
+    pages, feeds = builder.build_markdown_pages(md, md_template)
+    builder.build_html_pages(html_template, pages)
+    builder.build_json_feed(json_template, feeds)
 
     # Run a local server and open web browser
     if args.command == "serve":

@@ -31,9 +31,9 @@ class Builder:
         self.input_dir = config["input_dir"]
         self.output_dir = config["output_dir"]
 
-    def build_pages(self, md, template):
+    def build_markdown_pages(self, md, template):
         """
-        Build root and category HTML pages from Markdown files.
+        Build the Markdown HTML pages.
         """
         pages = []  # Store page dictionaries for index template
         feeds = []  # Store feed dictionaries for feed template
@@ -91,9 +91,9 @@ class Builder:
 
         return pages, feeds
 
-    def build_index(self, template, pages):
+    def build_html_pages(self, template, pages):
         """
-        Build the index HTML page.
+        Build the regular HTML pages.
         """
 
         # Sort page dictionaries using category and title
@@ -109,7 +109,7 @@ class Builder:
         with index_path.open("w") as f:
             f.write(index_html)
 
-    def build_feed(self, template, feeds):
+    def build_json_feed(self, template, feeds):
         """
         Build the JSON feed.
         """
