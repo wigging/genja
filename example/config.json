@@ -1,5 +1,6 @@
 {
     "base_url": "https://example.com/testsite",
-    "input_dir": "mdcontent",
+    "markdown_dir": "_mdcontent",
+    "template_dir": "_templates",
     "output_dir": "website"
 }

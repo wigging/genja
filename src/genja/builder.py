@@ -14,7 +14,7 @@ class Builder:
     ----------
     base_url : str
         Base URL for the GitHub repository.
-    input_dir : str
+    markdown_dir : str
         Path to the Markdown content.
     output_dir : str
         Path where the HTML content is generated.
@@ -23,7 +23,7 @@ class Builder:
     def __init__(self, config: dict[str, str]):
         """Initialize with the config dictionary."""
         self.base_url = config["base_url"]
-        self.input_dir = config["input_dir"]
+        self.markdown_dir = config["markdown_dir"]
         self.output_dir = config["output_dir"]
 
     def build_markdown_pages(self, template, md):
@@ -33,7 +33,7 @@ class Builder:
         feeds = []  # Store feed dictionaries for JSON feed template
 
         # Parse the Markdown files and build HTML pages
-        for path in Path(self.input_dir).glob("**/*.md"):
+        for path in Path(self.markdown_dir).glob("**/*.md"):
             # Read text content of the Markdown file
             with path.open() as f:
                 mdtext = f.read()

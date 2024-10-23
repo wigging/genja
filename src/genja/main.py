@@ -11,6 +11,37 @@ from .builder import Builder
 from .server import run_server
 
 
+def run_builder(config):
+    """Build the website."""
+
+    # Setup the Markdown converter
+    md = markdown.Markdown(extensions=["meta", "fenced_code"])
+
+    # Setup the jinja template environment and get the Markdown and JSON templates
+    loader = FileSystemLoader(config["template_dir"])
+    env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
+    md_template = env.get_template("markdown.html")
+    json_template = env.get_template("feed.json")
+
+    # Get the HTML file names and templates
+    html_names = []
+    html_templates = []
+
+    for f in Path(config["template_dir"]).glob("*.html"):
+        if f.name != "markdown.html":
+            html_template = env.get_template(f.name)
+            html_templates.append(html_template)
+            html_names.append(f.name)
+
+    # Build the Markdown pages, HTML pages, and JSON feed
+    builder = Builder(config)
+    md_pages, feeds = builder.build_markdown_pages(md_template, md)
+    builder.build_html_pages(html_templates, html_names, md_pages)
+    builder.build_json_feed(json_template, feeds)
+
+    print(f"\nBuilt website in `{config['output_dir']}` directory.")
+
+
 def main():
     """Run the genja program."""
 
@@ -24,37 +55,19 @@ def main():
     with open("config.json") as json_file:
         config = json.load(json_file)
 
-    print(f'\n{"Command ":.<30} {args.command}')
+    print(f'\n{"Genja command ":.<30} {args.command}')
     print(f'{"Base URL ":.<30} {config["base_url"]}')
-    print(f'{"Input directory ":.<30} {config["input_dir"]}')
+    print(f'{"Markdown directory ":.<30} {config["markdown_dir"]}')
+    print(f'{"Template directory ":.<30} {config["template_dir"]}')
     print(f'{"Output directory ":.<30} {config["output_dir"]}')
 
-    # Setup the Markdown converter
-    md = markdown.Markdown(extensions=["meta", "fenced_code"])
+    # Build the website
+    if args.command == "build":
+        run_builder(config)
 
-    # Setup the jinja template environment and get the Markdown and JSON templates
-    env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True, lstrip_blocks=True)
-    md_template = env.get_template("markdown.html")
-    json_template = env.get_template("feed.json")
-
-    # Get the HTML file names and templates
-    html_names = []
-    html_templates = []
-
-    for f in Path("templates").glob("*.html"):
-        if f.name != "markdown.html":
-            html_template = env.get_template(f.name)
-            html_templates.append(html_template)
-            html_names.append(f.name)
-
-    # Build the Markdown pages, HTML pages, and JSON feed
-    builder = Builder(config)
-    md_pages, feeds = builder.build_markdown_pages(md_template, md)
-    builder.build_html_pages(html_templates, html_names, md_pages)
-    builder.build_json_feed(json_template, feeds)
-
-    # Run a local server and open web browser
+    # Build the website then run a local server and open web browser
     if args.command == "serve":
+        run_builder(config)
         run_server(config)
 
     # Clean up (remove) all HTML files and the feed.json file in output directory
@@ -63,7 +76,7 @@ def main():
 
         Path(output_path / "feed.json").unlink()
 
-        for html_file in output_path.glob("**/*.html"):
+        for html_file in output_path.glob("[!_]**/*.html"):
             html_file.unlink()
 
-        print(f"\nRemoved all HTML files and feed.json in {output_path} directory.")
+        print(f"\nRemoved all HTML files and feed.json in `{output_path}` directory.")
