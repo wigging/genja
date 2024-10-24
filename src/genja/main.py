@@ -2,7 +2,7 @@
 
 import argparse
 import markdown
-import json
+import tomllib
 from importlib.metadata import version
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
@@ -87,9 +87,9 @@ def main():
     parser.add_argument("-v", "--version", action="version", version=version("genja"))
     args = parser.parse_args()
 
-    # Get configuration from JSON file
-    with open("config.json") as json_file:
-        config = json.load(json_file)
+    # Get configuration from TOML file, requires Python 3.11 or higher
+    with open("config.toml", "rb") as f:
+        config = tomllib.load(f)
 
     print(f'\n{"Genja command ":.<30} {args.command}')
     print(f'{"Base URL ":.<30} {config["base_url"]}')

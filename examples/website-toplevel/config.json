@@ -1,6 +1,0 @@
-{
-    "base_url": "https://example.com/mywebsite",
-    "markdown_dir": "_notes",
-    "template_dir": "_templates",
-    "output_dir": "."
-}
