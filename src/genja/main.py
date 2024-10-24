@@ -42,6 +42,42 @@ def run_builder(config):
     print(f"\nBuilt website in `{config['output_dir']}` directory.")
 
 
+def remove_files(config):
+    """Remove the generated HTML and JSON feed files."""
+
+    markdown_path = Path(config["markdown_dir"])
+    template_path = Path(config["template_dir"])
+    output_path = Path(config["output_dir"])
+
+    # Get HTML files that were generated from the Markdown files
+    p = markdown_path.glob("**/*.md")
+    html_files = [x.name.replace("md", "html") for x in p if x.is_file()]
+
+    # Add HTML files that were generated from templates
+    p = template_path.glob("**/*.html")
+    for x in p:
+        if x.name != "markdown.html":
+            html_files.append(x.name)
+
+    # Remove the generated JSON feed file in the output directory
+    json_path = Path(output_path / "feed.json")
+
+    if json_path.exists():
+        json_path.unlink()
+
+    # Remove the generated HTML files in the output directory
+    for html_path in output_path.glob("**/*.html"):
+        if html_path.name in html_files and html_path.parent != template_path:
+            html_path.unlink()
+
+    # Remove empty directories
+    for path in output_path.iterdir():
+        if path.is_dir() and any(path.iterdir()) is False:
+            path.rmdir()
+
+    print(f"\nRemoved generated HTML files and JSON feed file in `{output_path}` directory.")
+
+
 def main():
     """Run the genja program."""
 
@@ -70,17 +106,6 @@ def main():
         run_builder(config)
         run_server(config)
 
-    # Clean up (remove) all HTML files and the feed.json file in output directory
+    # Remove generated files in the output directory
     if args.command == "clean":
-        output_path = Path(config["output_dir"])
-        template_path = Path(config["template_dir"])
-
-        Path(output_path / "feed.json").unlink()
-
-        for html_path in output_path.glob("**/*.html"):
-            if config["output_dir"] != ".":
-                html_path.unlink()
-            elif html_path.parent != template_path and html_path.name != "index.html":
-                html_path.unlink()
-
-        print(f"\nRemoved all HTML files and feed.json in `{output_path}` directory.")
+        remove_files(config)
