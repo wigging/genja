@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Open Graph -->
+    <meta property="og:url" content="https://example.com/testsite">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="My Website">
+    <meta property="og:description" content="Description for my website.">
+    <meta property="og:image" content="https://example.com/testsite/img/apple.jpg">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <title>My Website</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+
+        <h1 style="margin-top:20px">My Website</h1>
+
+        <p style="margin-top:20px"><a href="index.html">About</a> &ensp;/&ensp; Notes &ensp;/&ensp; <a href="photos.html">Photos</a></p>
+
+        <h2>Fruits</h2>
+        <ul>
+        {% for page in pages %}
+        {% if page.category == 'fruits' %}
+            <li><a href="{{ page.link }}">{{ page.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

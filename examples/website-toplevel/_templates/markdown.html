@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Open Graph -->
-    <meta property="og:url" content="https://example.com/testsite/veggies/carrots.html">
+    <meta property="og:url" content="{{ meta['url'] }}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="My Website">
     <meta property="og:description" content="Description for my website.">
@@ -20,7 +20,7 @@
     <script>hljs.highlightAll();</script>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="{% if catpage %}../{% endif %}styles.css">
 
     <title>My Website</title>
 </head>
@@ -28,12 +28,21 @@
 <div class="container">
     <div class="row">
         <div class="col-md">
+            <h1 style="margin-top:20px">My Website</h1>
 
-            <h2 class="mt-4">Carrots</h2>
+            {% if meta['title'][0] == 'Photos' %}
+                <p style="margin-top:20px"><a href="index.html">About</a> &ensp;/&ensp; <a href="notes.html">Notes</a> &ensp;/&ensp; Photos</p>
+            {% else %}
+                <p style="margin-top:20px"><a href="../index.html">About</a> &ensp;/&ensp; <a href="../notes.html">Notes</a> &ensp;/&ensp; <a href="../photos.html">Photos</a></p>
+            {% endif %}
 
-                <h6>Written on August 4, 2023</h6>
+            <h2 class="mt-4">{{ meta['title'][0] }}</h2>
 
-            <p>Carrots are orange. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            {% if meta['date'] %}
+                <h6>Written on {{ meta['date'][0] }}</h6>
+            {% endif %}
+
+            {{ content }}
 
         </div>
     </div>
