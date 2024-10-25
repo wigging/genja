@@ -11,10 +11,12 @@ def test_init():
     """
     config = {
         "base_url": "https://example.com/testsite",
-        "input_dir": "mdcontent",
-        "output_dir": "website",
+        "markdown_dir": "mdcontent",
+        "template_dir": "templates",
+        "output_dir": "website"
     }
+
     builder = Builder(config)
     assert builder.base_url == "https://example.com/testsite"
-    assert builder.input_dir == "mdcontent"
+    assert builder.markdown_dir == "mdcontent"
     assert builder.output_dir == "website"

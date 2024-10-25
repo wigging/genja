@@ -8,16 +8,18 @@ version = "24.3"
 authors = [{name = "Gavin Wiggins"}]
 description = "Static site generator for GitHub Pages"
 readme = "README.md"
+requires-python = ">=3.12"
 dependencies = ["markdown", "jinja2", "beautifulsoup4", "livereload"]
+license = "MIT"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent"
 ]
-license = "MIT"
 
 [project.optional-dependencies]
 docs = ["furo", "sphinx"]
+dev = ["furo", "pytest", "ruff", "sphinx"]
 
 [project.urls]
 "Homepage" = "https://github.com/wigging/genja"

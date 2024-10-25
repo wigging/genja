@@ -10,19 +10,7 @@
 name: genja
 
 dependencies:
-  - python
-  - beautifulsoup4
-  - build
-  - ipython
-  - jinja2
-  - markdown
-  - pytest
-  - twine
+  - python=3.12
   - pip
   - pip:
-    - furo
-    - ipdb
-    - livereload
-    - ruff
-    - sphinx
-    - --editable .
+    - --editable .[dev]
