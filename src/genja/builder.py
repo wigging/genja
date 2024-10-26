@@ -28,7 +28,6 @@ class Builder:
 
     def build_markdown_pages(self, template, md):
         """Build the Markdown HTML pages."""
-
         pages = []  # Store page dictionaries for Markdown and HTML templates
         feeds = []  # Store feed dictionaries for JSON feed template
 
@@ -98,7 +97,6 @@ class Builder:
         pages : list of dict
             The dictionaries that describe the Markdown pages.
         """
-
         # Sort page dictionaries using category and title
         sorted_pages = sorted(pages, key=itemgetter("category", "title"))
 
@@ -115,7 +113,6 @@ class Builder:
 
     def build_json_feed(self, template, feeds):
         """Build the JSON feed."""
-
         # Sort feed dictionaries using date
         sorted_feeds = sorted(feeds, key=itemgetter("date"), reverse=True)
 

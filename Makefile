@@ -1,10 +1,10 @@
 # Show help, place this first so it runs with just `make`
 help:
 	@printf "\nCommands:\n"
-	@printf "\033[32mcheck\033[0m   run ruff linter and formatter checks\n"
-	@printf "\033[32mclean\033[0m   remove cache directories\n"
-	@printf "\033[32mtest\033[0m    run unit tests with pytest\n"
-	@printf "\033[32mpublish\033[0m build and upload package to PyPI\n"
+	@printf "\033[32mcheck\033[0m    run ruff linter and formatter checks\n"
+	@printf "\033[32mclean\033[0m    remove cache directories\n"
+	@printf "\033[32mtest\033[0m     run unit tests with pytest\n"
+	@printf "\033[32mpublish\033[0m  build and upload package to PyPI\n"
 
 check:
 	@printf "\n\033[32mRun ruff linter checks\033[0m\n"

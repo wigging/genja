@@ -13,7 +13,7 @@ def test_init():
         "base_url": "https://example.com/testsite",
         "markdown_dir": "mdcontent",
         "template_dir": "templates",
-        "output_dir": "website"
+        "output_dir": "website",
     }
 
     builder = Builder(config)

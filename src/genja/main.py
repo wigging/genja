@@ -13,7 +13,6 @@ from .server import run_server
 
 def run_builder(config):
     """Build the website."""
-
     # Setup the Markdown converter
     md = markdown.Markdown(extensions=["meta", "fenced_code"])
 
@@ -44,7 +43,6 @@ def run_builder(config):
 
 def remove_files(config):
     """Remove the generated HTML and JSON feed files."""
-
     markdown_path = Path(config["markdown_dir"])
     template_path = Path(config["template_dir"])
     output_path = Path(config["output_dir"])
@@ -80,7 +78,6 @@ def remove_files(config):
 
 def main():
     """Run the genja program."""
-
     # Command line arguments
     parser = argparse.ArgumentParser(description="Genja static site generator for GitHub Pages")
     parser.add_argument("command", choices=["build", "serve", "clean"], help="genja commands")

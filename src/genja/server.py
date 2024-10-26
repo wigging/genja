@@ -16,7 +16,6 @@ def run_server(config):
         Configuration dictionary that contains `base_url`, `markdown_dir`, and
         `output_dir` keys.
     """
-
     # Get the Markdown and output directories
     markdown_dir = config["markdown_dir"]
     output_dir = config["output_dir"]
