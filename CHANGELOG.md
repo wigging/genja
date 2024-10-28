@@ -2,6 +2,20 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v24.10
+
+#### Added
+
+- Require Python version 3.12 or higher
+- Improve the `genja clean` command to remove all generated files
+- Add `template_dir` in config file
+- Put examples into subdirectories
+
+#### Changed
+
+- Use TOML instead of JSON for config file
+- Change `input_dir` to `markdown_dir` in config file
+
 ## Genja v24.3
 
 #### Added
