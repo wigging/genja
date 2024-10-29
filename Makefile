@@ -22,6 +22,10 @@ test:
 	pytest
 
 # Build and upload package to PyPI
+# See the uploading distribution steps at
+# https://packaging.python.org/en/latest/tutorials/packaging-projects/
 publish:
+	pip install --upgrade build
 	python -m build
+	pip install --upgrade twine
 	twine upload dist/*
