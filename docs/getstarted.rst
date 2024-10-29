@@ -28,7 +28,7 @@ Check the installed version from the command line:
 Usage
 -----
 
-Before running genja, create a project structure as shown below. The **content** directory contains Markdown files that are used to generate HTML files. The **templates** directory contains `Jinja <https://jinja.palletsprojects.com>`_ templates that are used to render the HTML pages. The **docs** directory contains the built website which can be hosted with GitHub Pages. Lastly, the **config.json** defines the URLs and directories for the project.
+Before running genja, create a project structure as shown below. The **content** directory contains Markdown files that are used to generate HTML files. The **templates** directory contains `Jinja <https://jinja.palletsprojects.com>`_ templates that are used to render the HTML pages. The **docs** directory contains the built website which can be hosted with GitHub Pages. Lastly, the **config.toml** defines the URLs and directories for the project.
 
 .. code:: text
 
@@ -36,17 +36,16 @@ Before running genja, create a project structure as shown below. The **content**
    ├── content/
    ├── templates/
    ├── docs/
-   └── config.json
+   └── config.toml
 
-The items in the **config.json** are shown below. The ``base_url`` is the URL for the homepage of the website. Markdown files that are parsed by Genja are located in the ``input_dir`` directory. The HTML files generated from Genja are located in the ``output_dir`` directory. Static content such as images and CSS files should go in the output directory.
+The items in the **config.toml** are shown below. The ``base_url`` is the URL for the homepage of the website. Markdown files that are parsed by Genja are located in the ``markdown_dir`` directory. The Jinja2 templates used by Genja are located in the ``template_dir`` directory The HTML files generated from Genja are located in the ``output_dir`` directory. Static content such as images and CSS files should go in the output directory.
 
-.. code:: json
+.. code:: toml
 
-   {
-       "base_url": "https://example.com/mywebsite",
-       "input_dir": "content",
-       "output_dir": "docs"
-   }
+   base_url = "https://example.com/mywebsite"
+   markdown_dir = "content"
+   template_dir = "templates"
+   output_dir = "docs"
 
 Use the ``serve`` command to build the website and start a local server. This will automatically open the default web browser to view the website. The website will automatically reload when changes are saved to the Markdown files.
 
