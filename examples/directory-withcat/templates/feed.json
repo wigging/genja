@@ -1,0 +1,17 @@
+{
+    "version": "https://jsonfeed.org/version/1.1",
+    "title": "My Example Feed",
+    "home_page_url": "https://example.com",
+    "feed_url": "https://example.com/feed.json",
+    "items": [
+    {% for post in posts %}
+        {
+            "id": "{{ post.url }}",
+            "url": "{{ post.url }}",
+            "title": "{{ post.title }}",
+            "date_published": "{{ post.iso_date }}",
+            "content_html": {{ post.html }}
+        }{% if not loop.last %},{% endif +%}
+    {% endfor %}
+    ]
+}

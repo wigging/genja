@@ -105,12 +105,9 @@ def _build_templates(config, templates, names, posts):
     """Build HTML for certain templates."""
     site_output = config["site_output"]
 
-    # Sort page dictionaries using category and title
-    sorted_posts = sorted(posts, key=itemgetter("category", "title"))
-
     # Render the page templates and write to HTML files
     for template, name in zip(templates, names):
-        page_html = template.render(posts=sorted_posts)
+        page_html = template.render(posts=posts)
         page_path = Path(f"{site_output}/{name}")
 
         with page_path.open("w") as f:
