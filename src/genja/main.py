@@ -15,6 +15,7 @@ def remove_files(config):
     posts_path = Path("posts")
     templates_path = Path("templates")
     output_path = Path(config["site_output"])
+    blog_path = output_path / Path(config["posts_output"])
 
     # HTML files generated from Markdown files in pages directory
     p = pages_path.glob("**/*.md")
@@ -41,10 +42,13 @@ def remove_files(config):
         if html_path.name in html_files and html_path.parent != templates_path:
             html_path.unlink()
 
-    # Remove empty directories
-    for path in output_path.iterdir():
-        if path.is_dir() and any(path.iterdir()) is False:
-            path.rmdir()
+    # Remove empty sub-directories
+    for subdir in blog_path.glob('**/*'):
+            if subdir.is_dir() and not any(subdir.iterdir()):
+                subdir.rmdir()
+
+    # Remove empty blog directory
+    blog_path.rmdir()
 
     print(f"\nRemoved generated HTML files and JSON feed file in `{output_path}` directory.")
 
