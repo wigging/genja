@@ -17,8 +17,7 @@ def run_server(config):
         `output_dir` keys.
     """
     # Get the Markdown and output directories
-    markdown_dir = config["markdown_dir"]
-    output_dir = config["output_dir"]
+    output_dir = config["site_output"]
 
     # Open web browser to view website on localhost port
     webbrowser.open("http://localhost:5500")
@@ -26,5 +25,5 @@ def run_server(config):
     # Serve the website from the output directory and automatically reload it
     # when changes occur in the input directory
     server = Server()
-    server.watch(markdown_dir, "genja build")
+    server.watch("posts", "genja build")
     server.serve(root=output_dir)
