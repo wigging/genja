@@ -20,27 +20,37 @@ def _build_posts(config, template, md) -> list[dict]:
     posts = []
 
     for path in Path("posts").glob("**/*.md"):
-        # Read text content of the Markdown file
+        # Get category, link, url, and post path
+        category = path.parts[-2]
+
+        if category != "posts":
+            link = f"{posts_output}/{category}/{path.name}".replace("md", "html")
+            url = f"{base_url}/{posts_output}/{category}/{path.name}".replace("md", "html")
+            post_path = Path(f"{site_output}/{posts_output}/{category}/{path.name}")
+        else:
+            link = f"{posts_output}/{path.name}".replace("md", "html")
+            url = f"{base_url}/{posts_output}/{path.name}".replace("md", "html")
+            post_path = Path(f"{site_output}/{posts_output}/{path.name}")
+
+        # Get HTML string for the JSON feed
         with path.open() as f:
             mdtext = f.read()
 
-        # Convert Markdown content to HTML content
         html = md.convert(mdtext)
-
-        # Get meta data from the Markdown file
-        meta = md.Meta
-
-        link = f"{posts_output}/{path.name}".replace("md", "html")
-        url = f"{base_url}/{posts_output}/{path.name}".replace("md", "html")
-        iso_date = datetime.strptime(meta["date"][0], "%B %d, %Y").isoformat() + "Z"
-
         soup = BeautifulSoup(html, "html.parser")
         html_str = json.dumps(str(soup.p) + f'<p><a href="{url}">Continue reading...</a></p>')
 
+        # Get meta data from the Markdown file
+        meta = md.Meta
+        title = meta["title"][0]
+        long_date = meta["date"][0]
+        iso_date = datetime.strptime(meta["date"][0], "%B %d, %Y").isoformat() + "Z"
+
+        # Store the meta data for the post
         meta_data = {
-            "title": meta["title"][0],
-            "date": meta["date"][0],
-            "category": path.parts[-2],
+            "title": title,
+            "date": long_date,
+            "category": category,
             "link": link,
             "url": url,
             "iso_date": iso_date,
@@ -49,12 +59,10 @@ def _build_posts(config, template, md) -> list[dict]:
 
         posts.append(meta_data)
 
-        # Create new HTML path for the post
-        post_path = Path(f"{site_output}/{posts_output}/{path.name}")
-        post_path = post_path.with_suffix(".html")
-
         # Render the post template then write to HTML file
         post_html = template.render(meta=meta_data, content=html)
+
+        post_path = post_path.with_suffix(".html")
         post_path.parent.mkdir(parents=True, exist_ok=True)
 
         with post_path.open("w") as f:
