@@ -8,7 +8,38 @@ from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 
 from .builder import Builder
+from .builders import build_pages, build_posts, build_templates
 from .server import run_server
+
+
+def build_website(config):
+    """Build the website."""
+    md = markdown.Markdown(extensions=["meta", "fenced_code"])
+
+    loader = FileSystemLoader("templates")
+    env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
+
+    # Build the posts
+    post_template = env.get_template("post.html")
+    posts = build_posts(config, post_template, md)
+
+    # Build the pages
+    page_template = env.get_template("page.html")
+    build_pages(config, page_template, md)
+
+    # Build certain templates as pages too
+    page_names = []
+    page_templates = []
+
+    for f in Path("templates").glob("*.html"):
+        if f.name != "post.html" and f.name != "page.html":
+            page_template = env.get_template(f.name)
+            page_templates.append(page_template)
+            page_names.append(f.name)
+
+    build_templates(config, page_templates, page_names, posts)
+
+    print("\nBuilt website.")
 
 
 def run_builder(config):
@@ -43,18 +74,23 @@ def run_builder(config):
 
 def remove_files(config):
     """Remove the generated HTML and JSON feed files."""
-    markdown_path = Path(config["markdown_dir"])
-    template_path = Path(config["template_dir"])
-    output_path = Path(config["output_dir"])
+    pages_path = Path("pages")
+    posts_path = Path("posts")
+    templates_path = Path("templates")
+    output_path = Path(config["site_output"])
 
-    # Get HTML files that were generated from the Markdown files
-    p = markdown_path.glob("**/*.md")
+    # HTML files generated from Markdown files in pages directory
+    p = pages_path.glob("**/*.md")
     html_files = [x.name.replace("md", "html") for x in p if x.is_file()]
 
-    # Add HTML files that were generated from templates
-    p = template_path.glob("**/*.html")
+    # HTML files generated from Markdown files in posts directory
+    p = posts_path.glob("**/*.md")
+    html_files = html_files + [x.name.replace("md", "html") for x in p if x.is_file()]
+
+    # HTML files generated from templates
+    p = templates_path.glob("**/*.html")
     for x in p:
-        if x.name != "markdown.html":
+        if x.name != "post.html" and x.name != "page.html":
             html_files.append(x.name)
 
     # Remove the generated JSON feed file in the output directory
@@ -65,7 +101,7 @@ def remove_files(config):
 
     # Remove the generated HTML files in the output directory
     for html_path in output_path.glob("**/*.html"):
-        if html_path.name in html_files and html_path.parent != template_path:
+        if html_path.name in html_files and html_path.parent != templates_path:
             html_path.unlink()
 
     # Remove empty directories
@@ -90,13 +126,14 @@ def main():
 
     print(f'\n{"Genja command ":.<30} {args.command}')
     print(f'{"Base URL ":.<30} {config["base_url"]}')
-    print(f'{"Markdown directory ":.<30} {config["markdown_dir"]}')
-    print(f'{"Template directory ":.<30} {config["template_dir"]}')
-    print(f'{"Output directory ":.<30} {config["output_dir"]}')
+    # print(f'{"Markdown directory ":.<30} {config["markdown_dir"]}')
+    # print(f'{"Template directory ":.<30} {config["template_dir"]}')
+    print(f'{"Site output directory ":.<30} {config["site_output"]}')
 
     # Build the website
     if args.command == "build":
-        run_builder(config)
+        # run_builder(config)
+        build_website(config)
 
     # Build the website then run a local server and open web browser
     if args.command == "serve":
