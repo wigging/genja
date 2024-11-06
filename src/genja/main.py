@@ -48,7 +48,8 @@ def remove_files(config):
                 subdir.rmdir()
 
     # Remove empty blog directory
-    blog_path.rmdir()
+    if blog_path.exists():
+        blog_path.rmdir()
 
     print(f"\nRemoved generated HTML files and JSON feed file in `{output_path}` directory.")
 
