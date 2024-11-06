@@ -142,9 +142,10 @@ def build_website(config):
     post_template = env.get_template("post.html")
     posts = _build_posts(config, post_template, md)
 
-    # Build the pages
-    page_template = env.get_template("page.html")
-    _build_pages(config, page_template, md)
+    # Build the pages if they exist
+    if Path("templates/page.html").exists() and Path("pages").exists():
+        page_template = env.get_template("page.html")
+        _build_pages(config, page_template, md)
 
     # Build certain templates as pages too
     page_names = []
