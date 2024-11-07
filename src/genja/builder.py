@@ -1,124 +1,170 @@
-"""Builder class with methods to build the HTML pages and JSON feed."""
+"""Builders module."""
 
 import json
-from datetime import datetime
-from pathlib import Path
-from operator import itemgetter
+import markdown
+
 from bs4 import BeautifulSoup
+from datetime import datetime
+from jinja2 import Environment, FileSystemLoader, Template
+from operator import itemgetter
+from pathlib import Path
 
 
-class Builder:
-    """Builder class to create HTML pages and JSON feed.
+def _build_posts(
+    config: dict[str, str], template: Template, md: markdown.Markdown
+) -> list[dict[str, str]]:
+    """Build HTML for posts."""
+    base_url = config["base_url"]
+    site_output = config["site_output"]
+    posts_output = config["posts_output"]
 
-    Attributes
-    ----------
-    base_url : str
-        Base URL for the GitHub repository.
-    markdown_dir : str
-        Path to the Markdown content.
-    output_dir : str
-        Path where the HTML content is generated.
-    """
+    # Store meta data dictionary for each post
+    posts = []
 
-    def __init__(self, config: dict[str, str]):
-        """Initialize with the config dictionary."""
-        self.base_url = config["base_url"]
-        self.markdown_dir = config["markdown_dir"]
-        self.output_dir = config["output_dir"]
+    for path in Path("posts").glob("**/*.md"):
+        # Get category, link, url, and post path
+        category = path.parts[-2]
 
-    def build_markdown_pages(self, template, md):
-        """Build the Markdown HTML pages."""
-        pages = []  # Store page dictionaries for Markdown and HTML templates
-        feeds = []  # Store feed dictionaries for JSON feed template
+        if category != "posts":
+            link = f"{posts_output}/{category}/{path.name}".replace("md", "html")
+            url = f"{base_url}/{posts_output}/{category}/{path.name}".replace("md", "html")
+            post_path = Path(f"{site_output}/{posts_output}/{category}/{path.name}")
+        else:
+            link = f"{posts_output}/{path.name}".replace("md", "html")
+            url = f"{base_url}/{posts_output}/{path.name}".replace("md", "html")
+            post_path = Path(f"{site_output}/{posts_output}/{path.name}")
 
-        # Parse the Markdown files and build HTML pages
-        for path in Path(self.markdown_dir).glob("**/*.md"):
-            # Read text content of the Markdown file
-            with path.open() as f:
-                mdtext = f.read()
+        # Get HTML string for the JSON feed
+        with path.open() as f:
+            mdtext = f.read()
 
-            # Convert Markdown content to HTML
-            html = md.convert(mdtext)
+        html = md.convert(mdtext)
+        soup = BeautifulSoup(html, "html.parser")
+        html_str = json.dumps(str(soup.p) + f'<p><a href="{url}">Continue reading...</a></p>')
 
-            # Get metadata from the Markdown file
-            meta = md.Meta
+        # Get meta data from the Markdown file
+        meta = md.Meta  # pyright: ignore
+        title = meta["title"][0]
+        long_date = meta["date"][0]
+        iso_date = datetime.strptime(meta["date"][0], "%B %d, %Y").isoformat() + "Z"
 
-            # Get path parts and create the HTML path
-            parts = list(path.parts)
-            parts[0] = self.output_dir
+        # Store the meta data dictionary for the post
+        meta_data = {
+            "title": title,
+            "date": long_date,
+            "category": category,
+            "link": link,
+            "url": url,
+            "iso_date": iso_date,
+            "html": html_str,
+        }
 
-            # Store dictionaries for category pages
-            if len(parts) > 2:
-                # Get page dictionary for index template
-                category = parts[1]
-                link = f'{parts[1]}/{parts[2].replace("md", "html")}'
-                title = meta["title"][0]
-                date = meta["date"][0]
-                iso_date = datetime.strptime(date, "%B %d, %Y").isoformat() + "Z"
+        posts.append(meta_data)
 
-                pages.append({"category": category, "link": link, "title": title, "date": iso_date})
+        # Render the post template then write to HTML file
+        post_html = template.render(meta=meta_data, content=html)
 
-                # Get feed dictionary for feed template
-                soup = BeautifulSoup(html, "html.parser")
-                url = f'{self.base_url}/{parts[1]}/{parts[2].replace("md", "html")}'
-                cont_reading = f'<p><a href="{url}">Continue reading...</a></p>'
-                html_str = json.dumps(str(soup.p) + cont_reading)
+        post_path = post_path.with_suffix(".html")
+        post_path.parent.mkdir(parents=True, exist_ok=True)
 
-                feeds.append({"url": url, "title": title, "html": html_str, "date": iso_date})
-            else:
-                url = f'{self.base_url}/{parts[1].replace("md", "html")}'
+        with post_path.open("w") as f:
+            f.write(post_html)
 
-            # Render the page template then write to HTML file
-            catpage = True if len(parts) > 2 else False
-            meta["url"] = url
-            page_html = template.render(meta=meta, content=html, catpage=catpage)
+        # Reset the Markdown parser
+        md.reset()
 
-            page_path = Path(*parts).with_suffix(".html")
-            page_path.parent.mkdir(parents=True, exist_ok=True)
+    return posts
 
-            with page_path.open("w") as f:
-                f.write(page_html)
 
-            # Reset the Markdown parser
-            md.reset()
+def _build_pages(config: dict[str, str], template: Template, md: markdown.Markdown):
+    """Build HTML for pages."""
+    site_output = config["site_output"]
 
-        return pages, feeds
+    for path in Path("pages").glob("**/*.md"):
+        # Read text content of the Markdown file
+        with path.open() as f:
+            mdtext = f.read()
 
-    def build_html_pages(self, templates, names, pages):
-        """Build the other HTML pages.
+        # Convert Markdown content to HTML content
+        html = md.convert(mdtext)
 
-        Parameters
-        ----------
-        templates : list of jinja templates
-            The templates used to render each HTML file.
-        names : list of str
-            HTML file names associated with the templates. These file names
-            are written to the output directory.
-        pages : list of dict
-            The dictionaries that describe the Markdown pages.
-        """
-        # Sort page dictionaries using category and title
-        sorted_pages = sorted(pages, key=itemgetter("category", "title"))
+        # Create new HTML path for the page
+        page_path = Path(f"{site_output}/{path.name}")
+        page_path = page_path.with_suffix(".html")
 
-        # Sort page dictionaries by date
-        recent_pages = sorted(pages, key=itemgetter("date"), reverse=True)
+        # Render the page template then write to HTML file
+        page_html = template.render(content=html)
+        page_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Render the index template then write to HTML file
-        for template, name in zip(templates, names):
-            html_render = template.render(pages=sorted_pages, recents=recent_pages)
-            html_path = Path(f"{self.output_dir}/{name}")
+        with page_path.open("w") as f:
+            f.write(page_html)
 
-            with html_path.open("w") as f:
-                f.write(html_render)
+        # Reset the Markdown parser
+        md.reset()
 
-    def build_json_feed(self, template, feeds):
-        """Build the JSON feed."""
-        # Sort feed dictionaries using date
-        sorted_feeds = sorted(feeds, key=itemgetter("date"), reverse=True)
 
-        # Render the feed template then write to JSON file
-        feed_json = template.render(feeds=sorted_feeds)
-        feed_path = Path(f"{self.output_dir}/feed.json")
+def _build_templates(
+    config: dict[str, str], templates: list[Template], names: list[str], posts: list[dict[str, str]]
+):
+    """Build HTML for certain templates."""
+    site_output = config["site_output"]
 
-        with feed_path.open("w") as f:
-            f.write(feed_json)
+    # Render the page templates and write to HTML files
+    for template, name in zip(templates, names):
+        page_html = template.render(posts=posts)
+        page_path = Path(f"{site_output}/{name}")
+
+        with page_path.open("w") as f:
+            f.write(page_html)
+
+
+def _build_feed(config: dict[str, str], template: Template, posts: list[dict[str, str]]):
+    """Build the JSON feed."""
+    site_output = config["site_output"]
+
+    # Sort feed dictionaries using date
+    sorted_posts = sorted(posts, key=itemgetter("iso_date"), reverse=True)
+
+    # Render the feed template then write to JSON file
+    feed_json = template.render(posts=sorted_posts)
+    feed_path = Path(f"{site_output}/feed.json")
+
+    with feed_path.open("w") as f:
+        f.write(feed_json)
+
+
+def build_website(config: dict[str, str]):
+    """Build the website."""
+    # Setup the Markdown converter
+    md = markdown.Markdown(extensions=["meta", "fenced_code"])
+
+    # Setup the jinja template environment
+    loader = FileSystemLoader("templates")
+    env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
+
+    # Build the posts
+    post_template = env.get_template("post.html")
+    posts = _build_posts(config, post_template, md)
+
+    # Build the pages if they exist
+    if Path("templates/page.html").exists() and Path("pages").exists():
+        page_template = env.get_template("page.html")
+        _build_pages(config, page_template, md)
+
+    # Build certain templates as pages too
+    page_names = []
+    page_templates = []
+
+    for f in Path("templates").glob("*.html"):
+        if f.name != "post.html" and f.name != "page.html":
+            page_template = env.get_template(f.name)
+            page_templates.append(page_template)
+            page_names.append(f.name)
+
+    _build_templates(config, page_templates, page_names, posts)
+
+    # Build the JSON feed
+    feed_template = env.get_template("feed.json")
+    _build_feed(config, feed_template, posts)
+
+    print(f"\nBuilt website in `{config['site_output']}` directory.")

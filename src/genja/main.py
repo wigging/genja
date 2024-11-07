@@ -5,11 +5,11 @@ import tomllib
 from importlib.metadata import version
 from pathlib import Path
 
-from .builders import build_website
+from .builder import build_website
 from .server import run_server
 
 
-def remove_files(config):
+def remove_files(config: dict[str, str]):
     """Remove the generated HTML and JSON feed files."""
     pages_path = Path("pages")
     posts_path = Path("posts")
@@ -43,9 +43,9 @@ def remove_files(config):
             html_path.unlink()
 
     # Remove empty sub-directories
-    for subdir in blog_path.glob('**/*'):
-            if subdir.is_dir() and not any(subdir.iterdir()):
-                subdir.rmdir()
+    for subdir in blog_path.glob("**/*"):
+        if subdir.is_dir() and not any(subdir.iterdir()):
+            subdir.rmdir()
 
     # Remove empty blog directory
     if blog_path.exists():
