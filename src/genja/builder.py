@@ -156,7 +156,7 @@ def build_website(config: dict[str, str]):
     page_templates = []
 
     for f in Path("templates").glob("*.html"):
-        if f.name != "post.html" and f.name != "page.html":
+        if f.name != "post.html" and f.name != "page.html" and f.name != "base.html":
             page_template = env.get_template(f.name)
             page_templates.append(page_template)
             page_names.append(f.name)

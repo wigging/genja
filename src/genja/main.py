@@ -28,7 +28,7 @@ def remove_files(config: dict[str, str]):
     # HTML files generated from templates
     p = templates_path.glob("**/*.html")
     for x in p:
-        if x.name != "post.html" and x.name != "page.html":
+        if x.name != "post.html" and x.name != "page.html" and x.name != "base.html":
             html_files.append(x.name)
 
     # Remove the generated JSON feed file in the output directory
