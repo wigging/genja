@@ -8,4 +8,5 @@ Genja is a simple static website generator for GitHub Pages. It is a command lin
    :caption: Contents:
 
    getstarted
+   templates
    examples
