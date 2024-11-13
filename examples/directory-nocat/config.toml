@@ -4,3 +4,4 @@
 base_url = "https://example.com"
 posts_output = "blog"
 site_output = "mysite"
+title = "My Website"

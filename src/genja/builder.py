@@ -2,6 +2,7 @@
 
 import json
 import markdown
+import textwrap
 
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -118,19 +119,46 @@ def _build_templates(
             f.write(page_html)
 
 
-def _build_feed(config: dict[str, str], template: Template, posts: list[dict[str, str]]):
+def _build_feed(config: dict[str, str], posts: list[dict[str, str]]):
     """Build the JSON feed."""
+    base_url = config["base_url"]
     site_output = config["site_output"]
+    title = config["title"]
 
     # Sort feed dictionaries using date
     sorted_posts = sorted(posts, key=itemgetter("iso_date"), reverse=True)
 
-    # Render the feed template then write to JSON file
-    feed_json = template.render(posts=sorted_posts)
+    # Templates for building JSON feed
+    json_start = textwrap.dedent(f"""\
+    {{
+        "version": "https://jsonfeed.org/version/1.1",
+        "title": "{title}",
+        "home_page_url": "{base_url}",
+        "feed_url": "{base_url}/feed.json",
+        "items": [""")
+
+    json_end = textwrap.dedent("""
+        ]
+    }""")
+
+    # Build the JSON feed and write to a JSON file
+    content = ""
+
+    for post in sorted_posts:
+        content += f"""
+        {{
+            "id": "{post['url']}",
+            "url": "{post['url']}",
+            "title": "{post['title']}",
+            "date_published": "{post['iso_date']}",
+            "content_html": {post['html']}
+        }},"""
+
+    json_feed = json_start + content[:-1] + json_end
     feed_path = Path(f"{site_output}/feed.json")
 
     with feed_path.open("w") as f:
-        f.write(feed_json)
+        f.write(json_feed)
 
 
 def build_website(config: dict[str, str]):
@@ -164,7 +192,6 @@ def build_website(config: dict[str, str]):
     _build_templates(config, page_templates, page_names, posts)
 
     # Build the JSON feed
-    feed_template = env.get_template("feed.json")
-    _build_feed(config, feed_template, posts)
+    _build_feed(config, posts)
 
     print(f"\nBuilt website in `{config['site_output']}` directory.")

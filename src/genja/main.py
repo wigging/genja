@@ -70,6 +70,7 @@ def main():
     print(f'{"Base URL ":.<30} {config["base_url"]}')
     print(f'{"Posts output directory ":.<30} {config["posts_output"]}')
     print(f'{"Site output directory ":.<30} {config["site_output"]}')
+    print(f'{"Website title ":.<30} {config["title"]}')
 
     # Build the website
     if args.command == "build":
