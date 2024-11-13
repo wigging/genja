@@ -38,7 +38,6 @@ The ``directory-nocat`` example uses the ``mysite`` directory for the generated 
    │   ├── apple.md
    │   └── orange.md
    ├── templates/
-   │   ├── feed.json
    │   ├── index.html
    │   ├── page.html
    │   └── post.html
@@ -62,7 +61,6 @@ The ``directory-withcat`` example uses the ``mysite`` directory for the generate
    │   ├── fruits/
    │   └── veggies/
    ├── templates/
-   │   ├── feed.json
    │   ├── index.html
    │   ├── page.html
    │   └── post.html
@@ -85,7 +83,6 @@ The ``toplevel-nocat`` example uses the root directory for the generated HTML ou
    │   ├── apple.md
    │   └── orange.md
    ├── templates/
-   │   ├── feed.json
    │   ├── index.html
    │   ├── page.html
    │   └── post.html
@@ -106,7 +103,6 @@ The ``toplevel-nopages`` example uses the root directory for the generated HTML 
    │   ├── apple.md
    │   └── orange.md
    ├── templates/
-   │   ├── feed.json
    │   ├── index.html
    │   └── post.html
    ├── config.toml
@@ -129,7 +125,6 @@ The ``toplevel-withcat`` example uses the root directory for the generated HTML 
    │   ├── fruits/
    │   └── veggies/
    ├── templates/
-   │   ├── feed.json
    │   ├── index.html
    │   ├── page.html
    │   └── post.html

@@ -101,32 +101,7 @@ url
 iso_date
    The ISO date of the post.
 html
-   The HTML snippet used for the JSON feed. This is not needed for posts.
-
-JSON feed template
-------------------
-
-The ``feed.json`` template is used to create a JSON feed file from the posts data. The generated file can be used by RSS readers to subscribe to the website. An example of a JSON feed template is given below.
-
-.. code:: text
-
-   {
-       "version": "https://jsonfeed.org/version/1.1",
-       "title": "My Example Feed",
-       "home_page_url": "https://example.com",
-       "feed_url": "https://example.com/feed.json",
-       "items": [
-       {% for post in posts %}
-           {
-               "id": "{{ post.url }}",
-               "url": "{{ post.url }}",
-               "title": "{{ post.title }}",
-               "date_published": "{{ post.iso_date }}",
-               "content_html": {{ post.html }}
-           }{% if not loop.last %},{% endif +%}
-       {% endfor %}
-       ]
-   }
+   The HTML snippet used for the JSON feed. This is not needed for the post template.
 
 Base template
 -------------

@@ -43,19 +43,19 @@ Before running genja, create a project structure as shown below. Markdown files 
    │   ├── apple.md
    │   └── orange.md
    ├── templates/
-   │   ├── feed.json
    │   ├── index.html
    │   ├── page.html
    │   └── post.html
    └── config.toml
 
-The items in the **config.toml** are shown below. The ``base_url`` is the URL for the homepage of the website. The ``posts_output`` defines the output directory for the generated posts. The HTML files generated from Genja are located in the ``site_output`` directory. Static content such as images and CSS files should go in this directory.
+The items in the **config.toml** are shown below. The ``base_url`` is the URL for the homepage of the website. The ``posts_output`` defines the output directory for the generated posts. The HTML files generated from Genja are located in the ``site_output`` directory. Static content such as images and CSS files should go in this directory. The title of the website is defined by the ``title``.
 
 .. code:: toml
 
    base_url = "https://example.com"
    posts_output = "blog"
    site_output = "mysite"
+   title = "My Website"
 
 Use the ``serve`` command to build the website and start a local server. This will automatically open the default web browser to view the website. The website will automatically reload when changes are saved to the Markdown files.
 
