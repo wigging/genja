@@ -2,12 +2,47 @@
 
 import argparse
 import tomllib
+import importlib.resources
+import shutil
 from importlib.metadata import version
 from pathlib import Path
 
 from .builder import build_website
 from .server import run_server
+from . import static
 
+
+def create_project():
+    """Create a new example project."""
+    static_dir = importlib.resources.files(static)
+
+    # Copy config file
+    shutil.copy(f"{static_dir / 'config.toml'}", ".")
+
+    # Copy template files
+    Path("./templates").mkdir(exist_ok=True)
+    shutil.copy(f"{static_dir / 'index.html'}", "./templates")
+    shutil.copy(f"{static_dir / 'page.html'}", "./templates")
+    shutil.copy(f"{static_dir / 'post.html'}", "./templates")
+
+    # Copy posts files
+    Path("./posts/fruits").mkdir(parents=True, exist_ok=True)
+    shutil.copy(f"{static_dir / 'apple.md'}", "./posts/fruits")
+    shutil.copy(f"{static_dir / 'orange.md'}", "./posts/fruits")
+
+    Path("./posts/veggies").mkdir(parents=True, exist_ok=True)
+    shutil.copy(f"{static_dir / 'broccoli.md'}", "./posts/veggies")
+    shutil.copy(f"{static_dir / 'spinach.md'}", "./posts/veggies")
+
+    # Copy pages files
+    Path("./pages").mkdir(exist_ok=True)
+    shutil.copy(f"{static_dir / 'about.md'}", "./pages")
+    shutil.copy(f"{static_dir / 'contact.md'}", "./pages")
+
+    # Copy other files
+    Path("./mysite/img").mkdir(parents=True, exist_ok=True)
+    shutil.copy(f"{static_dir / 'apple.jpg'}", "./mysite/img")
+    shutil.copy(f"{static_dir / 'styles.css'}", "./mysite")
 
 def remove_files(config: dict[str, str]):
     """Remove the generated HTML and JSON feed files."""
@@ -58,9 +93,16 @@ def main():
     """Run the genja program."""
     # Command line arguments
     parser = argparse.ArgumentParser(description="Genja static site generator for GitHub Pages")
-    parser.add_argument("command", choices=["build", "serve", "clean"], help="genja commands")
+
+    choices = ["build", "serve", "clean", "new"]
+    parser.add_argument("command", choices=choices, help="genja commands")
+
     parser.add_argument("-v", "--version", action="version", version=version("genja"))
     args = parser.parse_args()
+
+    # Create an example project
+    if args.command == "new":
+        create_project()
 
     # Get configuration from TOML file, requires Python 3.11 or higher
     with open("config.toml", "rb") as f:
