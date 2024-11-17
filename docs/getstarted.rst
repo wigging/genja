@@ -28,7 +28,7 @@ Check the installed version from the command line:
 Usage
 -----
 
-Before running genja, create a project structure as shown below. Markdown files go into the **pages** and **posts** directories. The **pages** directory is for standalone content that is not dated such as an about page or contact page. The **posts** directory is for dated content such as blog posts or articles. The **templates** directory contains `Jinja <https://jinja.palletsprojects.com>`_ templates that are used to render the HTML pages and the JSON feed. The **mysite** directory contains the built website which can be hosted with GitHub Pages or some other web hosting platform. Lastly, the **config.toml** defines the URLs and directories for the project.
+Before running genja, create a project structure as shown below. Or create a new example project by using the ``genja new`` command. Markdown files go into the **pages** and **posts** directories. The **pages** directory is for standalone content that is not dated such as an about page or contact page. The **posts** directory is for dated content such as blog posts or articles. The **templates** directory contains `Jinja <https://jinja.palletsprojects.com>`_ templates that are used to render the HTML pages and posts. The **mysite** directory contains the built website which can be hosted with GitHub Pages or some other web hosting platform. Lastly, the **config.toml** defines the URLs and directories for the project.
 
 .. code:: text
 
@@ -48,7 +48,7 @@ Before running genja, create a project structure as shown below. Markdown files 
    │   └── post.html
    └── config.toml
 
-The items in the **config.toml** are shown below. The ``base_url`` is the URL for the homepage of the website. The ``posts_output`` defines the output directory for the generated posts. The HTML files generated from Genja are located in the ``site_output`` directory. Static content such as images and CSS files should go in this directory. The title of the website is defined by the ``title``.
+The items in the **config.toml** are shown below. The ``base_url`` is the URL for the homepage of the website. The ``posts_output`` defines the output directory for the generated HTML posts. All of the HTML files generated from Genja are located in the ``site_output`` directory. Static content such as images and CSS files should go in this directory. The title of the website is defined by the ``title`` key.
 
 .. code:: toml
 
@@ -68,3 +68,9 @@ Use the ``build`` command to build the website without running a local server.
 .. code:: text
 
    genja build
+
+Use the ``clean`` command to remove all the generated HTML files and the JSON feed file.
+
+.. code:: text
+
+   genja clean
