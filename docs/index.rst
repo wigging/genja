@@ -10,3 +10,4 @@ Genja is a simple static website generator. It is a command line tool built in P
    getstarted
    templates
    examples
+   contributing
