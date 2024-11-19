@@ -44,6 +44,7 @@ def create_project():
     shutil.copy(f"{static_dir / 'apple.jpg'}", "./mysite/img")
     shutil.copy(f"{static_dir / 'styles.css'}", "./mysite")
 
+
 def remove_files(config: dict[str, str]):
     """Remove the generated HTML and JSON feed files."""
     pages_path = Path("pages")

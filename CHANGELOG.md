@@ -2,6 +2,21 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v24.11
+
+#### Added
+
+- The `genja new` command creates a new example project
+- Contributing guidelines
+- Use `base.html` as the base template if it exists
+- Templates page in documentation
+
+#### Changed
+
+- Use single Makefile at root of project instead of the Makefile in docs
+- Build JSON feed from template strings instead of template file
+- Refactor all examples for latest package changes
+
 ## Genja v24.10
 
 #### Added
