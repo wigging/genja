@@ -6,18 +6,14 @@ The following is a set of guidelines for contributing to the Genja Python packag
 
 ## Development environment
 
-Clone this repository and use the conda environment file to create a Python environment for developing Genja. See the comments in the file for more details. The conda environment uses [ruff](https://docs.astral.sh/ruff/) for linting and formatting along with [pytest](https://docs.pytest.org) for running tests. Genja is installed in editable mode within the environment.
+Clone this repository and use the [uv tool](https://docs.astral.sh/uv/) for Python and package management. The environment created by uv uses [ruff](https://docs.astral.sh/ruff/) for linting and formatting along with [pytest](https://docs.pytest.org) for running tests. Genja is installed in editable mode within the environment.
 
 ```bash
 # Clone this project
 git clone https://github.com/wigging/genja.git
 
-# Create the conda environment
-cd genja
-conda env create --file environment.yml
-
-# Activate the conda environment
-conda activate genja
+# Sync the project environment
+uv sync
 ```
 
 ## Code style, linting, and formatting
