@@ -2,6 +2,14 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v25.2
+
+#### Changed
+
+- Prepend directories used by Genja with an underscore. The directories are `_pages`, `_posts`, and `_templates`.
+- Configuration file is now `genja.toml` instead of `config.toml`
+- Use uv instead of conda for Python and package management
+
 ## Genja v24.11
 
 #### Added

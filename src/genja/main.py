@@ -109,11 +109,11 @@ def main():
     with open("genja.toml", "rb") as f:
         config = tomllib.load(f)
 
-    print(f'\n{"Genja command ":.<30} {args.command}')
-    print(f'{"Base URL ":.<30} {config["base_url"]}')
-    print(f'{"Posts output directory ":.<30} {config["posts_output"]}')
-    print(f'{"Site output directory ":.<30} {config["site_output"]}')
-    print(f'{"Website title ":.<30} {config["title"]}')
+    print(f"\n{'Genja command ':.<30} {args.command}")
+    print(f"{'Base URL ':.<30} {config['base_url']}")
+    print(f"{'Posts output directory ':.<30} {config['posts_output']}")
+    print(f"{'Site output directory ':.<30} {config['site_output']}")
+    print(f"{'Website title ':.<30} {config['title']}")
 
     # Build the website
     if args.command == "build":
