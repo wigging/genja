@@ -11,7 +11,7 @@ import importlib.metadata
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "Genja"
-copyright = "2024, Gavin Wiggins"
+copyright = "2025, Gavin Wiggins"
 author = "Gavin Wiggins"
 release = importlib.metadata.version("genja")
 

@@ -23,7 +23,7 @@ Use the commands shown below to build the example website without starting a loc
 Directory output with no categories
 -----------------------------------
 
-The **directory-nocat** example uses the **mysite** directory for the generated HTML output. The Markdown files are located in the **pages** and **posts** directories. The Markdown files are not organized into categories using sub-directories. The **templates** directory contains the Jinja templates.
+The **directory-nocat** example uses the **mysite** directory for the generated HTML output. The Markdown files are located in the **_pages** and **_posts** directories. The Markdown files are not organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
 
 .. code:: text
 
@@ -31,22 +31,22 @@ The **directory-nocat** example uses the **mysite** directory for the generated 
    ├── mysite/
    │   ├── img/
    │   └── styles.css
-   ├── pages/
+   ├── _pages/
    │   ├── about.md
    │   └── contact.md
-   ├── posts/
+   ├── _posts/
    │   ├── apple.md
    │   └── orange.md
-   ├── templates/
+   ├── _templates/
    │   ├── index.html
    │   ├── page.html
    │   └── post.html
-   └── config.toml
+   └── genja.toml
 
 Directory output with categories
 --------------------------------
 
-The **directory-withcat** example uses the **mysite** directory for the generated HTML output. The Markdown files are located in the **pages** and **posts** directories. The Markdown files are organized into categories using sub-directories. The **templates** directory contains the Jinja templates.
+The **directory-withcat** example uses the **mysite** directory for the generated HTML output. The Markdown files are located in the **_pages** and **_posts** directories. The Markdown files are organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
 
 .. code:: text
 
@@ -54,79 +54,79 @@ The **directory-withcat** example uses the **mysite** directory for the generate
    ├── mysite/
    │   ├── img/
    │   └── styles.css
-   ├── pages/
+   ├── _pages/
    │   ├── about.md
    │   └── contact.md
-   ├── posts/
+   ├── _posts/
    │   ├── fruits/
    │   └── veggies/
-   ├── templates/
+   ├── _templates/
    │   ├── index.html
    │   ├── page.html
    │   └── post.html
-   └── config.toml
+   └── genja.toml
 
 Top-level output with no categories
 -----------------------------------
 
-The **toplevel-nocat** example uses the root directory for the generated HTML output. The Markdown files are located in the **pages** and **posts** directories. The Markdown files are not organized into categories using sub-directories. The **templates** directory contains the Jinja templates.
+The **toplevel-nocat** example uses the root directory for the generated HTML output. The Markdown files are located in the **_pages** and **_posts** directories. The Markdown files are not organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
 
 .. code:: text
 
    toplevel-nocat/
    ├── img/
    │   └── apple.jpg
-   ├── pages/
+   ├── _pages/
    │   ├── about.md
    │   └── contact.md
-   ├── posts/
+   ├── _posts/
    │   ├── apple.md
    │   └── orange.md
-   ├── templates/
+   ├── _templates/
    │   ├── index.html
    │   ├── page.html
    │   └── post.html
-   ├── config.toml
+   ├── genja.toml
    └── styles.css
 
 Top-level output with no pages
 ------------------------------
 
-The **toplevel-nopages** example uses the root directory for the generated HTML output. The Markdown files are located in the **posts** directory, there is no **pages** directory for this example. The Markdown files are not organized into categories using sub-directories. The **templates** directory contains the Jinja templates.
+The **toplevel-nopages** example uses the root directory for the generated HTML output. The Markdown files are located in the **_posts** directory, there is no **_pages** directory for this example. The Markdown files are not organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
 
 .. code:: text
 
    toplevel-nopages/
    ├── img/
    │   └── apple.jpg
-   ├── posts/
+   ├── _posts/
    │   ├── apple.md
    │   └── orange.md
-   ├── templates/
+   ├── _templates/
    │   ├── index.html
    │   └── post.html
-   ├── config.toml
+   ├── genja.toml
    └── styles.css
 
 Top-level output with categories
 --------------------------------
 
-The **toplevel-withcat** example uses the root directory for the generated HTML output. The Markdown files are located in the **pages** and **posts** directories. The Markdown files are organized into categories using sub-directories. The **templates** directory contains the Jinja templates.
+The **toplevel-withcat** example uses the root directory for the generated HTML output. The Markdown files are located in the **_pages** and **_posts** directories. The Markdown files are organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
 
 .. code:: text
 
    toplevel-withcat/
    ├── img/
    │   └── apple.jpg
-   ├── pages/
+   ├── _pages/
    │   ├── about.md
    │   └── contact.md
-   ├── posts/
+   ├── _posts/
    │   ├── fruits/
    │   └── veggies/
-   ├── templates/
+   ├── _templates/
    │   ├── index.html
    │   ├── page.html
    │   └── post.html
-   ├── config.toml
+   ├── genja.toml
    └── styles.css

@@ -1,12 +1,12 @@
 Templates
 =========
 
-Genja uses `Jinja templates <https://jinja.palletsprojects.com>`_ to write Markdown content to HTML files. You can probably guess where the name "Genja" came from. All template files must go in a directory named **templates**.
+Genja uses `Jinja templates <https://jinja.palletsprojects.com>`_ to write Markdown content to HTML files. You can probably guess where the name "Genja" came from. All template files must go in a directory named **_templates**.
 
 Page template
 -------------
 
-The ``page.html`` template is used to render the Markdown files contained in the **pages** directory. This template must be named ``page.html`` for Genja to recognize it. The page template is not needed if there are no pages (pages directory) for the project.
+The ``page.html`` template is used to render the Markdown files contained in the **_pages** directory. This template must be named ``page.html`` for Genja to recognize it. The page template is not needed if there are no pages (pages directory) for the project.
 
 An example of a page template is given below. The ``{{ content }}`` is where the content of the Markdown file is rendered. Unlike the post template discussed in the next section, the Markdown content is the only data provided to the page template.
 
@@ -42,7 +42,7 @@ An example of a page template is given below. The ``{{ content }}`` is where the
 Post template
 -------------
 
-The ``post.html`` template is used to render the Markdown files contained in the **posts** directory. This template must be named ``post.html`` for Genja to identify it. The post template and posts directory are required by Genja.
+The ``post.html`` template is used to render the Markdown files contained in the **_posts** directory. This template must be named ``post.html`` for Genja to identify it. The post template and posts directory are required by Genja.
 
 An example of a post template is given below. The ``{{ content }}`` variable is where the content of the Markdown file is rendered. A ``meta`` dictionary that contains information about the post is also available in the template.
 
@@ -65,7 +65,7 @@ An example of a post template is given below. The ``{{ content }}`` variable is 
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
        <!-- Styles -->
-       <link rel="stylesheet" href="{% if meta.category != 'posts' %}../../{% else %}../{% endif %}styles.css">
+       <link rel="stylesheet" href="{% if meta.category != '_posts' %}../../{% else %}../{% endif %}styles.css">
 
        <title>My Website</title>
    </head>
