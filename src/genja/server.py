@@ -1,4 +1,4 @@
-"""Function to run a server."""
+"""Function to run a local server."""
 
 import webbrowser
 from livereload import Server
@@ -12,9 +12,8 @@ def run_server(config: dict[str, str]):
 
     Parameters
     ----------
-    config : dict
-        Configuration dictionary that contains `base_url`, `markdown_dir`, and
-        `output_dir` keys.
+    config
+        Configuration settings from the config file.
     """
     # Get the Markdown and output directories
     output_dir = config["site_output"]
@@ -25,5 +24,5 @@ def run_server(config: dict[str, str]):
     # Serve the website from the output directory and automatically reload it
     # when changes occur in the input directory
     server = Server()
-    server.watch("posts", "genja build")
+    server.watch("_posts", "genja build")
     server.serve(root=output_dir)

@@ -17,27 +17,27 @@ def create_project():
     static_dir = importlib.resources.files(static)
 
     # Copy config file
-    shutil.copy(f"{static_dir / 'config.toml'}", ".")
+    shutil.copy(f"{static_dir / 'genja.toml'}", ".")
 
     # Copy template files
-    Path("./templates").mkdir(exist_ok=True)
-    shutil.copy(f"{static_dir / 'index.html'}", "./templates")
-    shutil.copy(f"{static_dir / 'page.html'}", "./templates")
-    shutil.copy(f"{static_dir / 'post.html'}", "./templates")
+    Path("./_templates").mkdir(exist_ok=True)
+    shutil.copy(f"{static_dir / 'index.html'}", "./_templates")
+    shutil.copy(f"{static_dir / 'page.html'}", "./_templates")
+    shutil.copy(f"{static_dir / 'post.html'}", "./_templates")
 
     # Copy posts files
-    Path("./posts/fruits").mkdir(parents=True, exist_ok=True)
-    shutil.copy(f"{static_dir / 'apple.md'}", "./posts/fruits")
-    shutil.copy(f"{static_dir / 'orange.md'}", "./posts/fruits")
+    Path("./_posts/fruits").mkdir(parents=True, exist_ok=True)
+    shutil.copy(f"{static_dir / 'apple.md'}", "./_posts/fruits")
+    shutil.copy(f"{static_dir / 'orange.md'}", "./_posts/fruits")
 
-    Path("./posts/veggies").mkdir(parents=True, exist_ok=True)
-    shutil.copy(f"{static_dir / 'broccoli.md'}", "./posts/veggies")
-    shutil.copy(f"{static_dir / 'spinach.md'}", "./posts/veggies")
+    Path("./_posts/veggies").mkdir(parents=True, exist_ok=True)
+    shutil.copy(f"{static_dir / 'broccoli.md'}", "./_posts/veggies")
+    shutil.copy(f"{static_dir / 'spinach.md'}", "./_posts/veggies")
 
     # Copy pages files
-    Path("./pages").mkdir(exist_ok=True)
-    shutil.copy(f"{static_dir / 'about.md'}", "./pages")
-    shutil.copy(f"{static_dir / 'contact.md'}", "./pages")
+    Path("./_pages").mkdir(exist_ok=True)
+    shutil.copy(f"{static_dir / 'about.md'}", "./_pages")
+    shutil.copy(f"{static_dir / 'contact.md'}", "./_pages")
 
     # Copy other files
     Path("./mysite/img").mkdir(parents=True, exist_ok=True)
@@ -47,9 +47,9 @@ def create_project():
 
 def remove_files(config: dict[str, str]):
     """Remove the generated HTML and JSON feed files."""
-    pages_path = Path("pages")
-    posts_path = Path("posts")
-    templates_path = Path("templates")
+    pages_path = Path("_pages")
+    posts_path = Path("_posts")
+    templates_path = Path("_templates")
     output_path = Path(config["site_output"])
     blog_path = output_path / Path(config["posts_output"])
 
@@ -106,7 +106,7 @@ def main():
         create_project()
 
     # Get configuration from TOML file, requires Python 3.11 or higher
-    with open("config.toml", "rb") as f:
+    with open("genja.toml", "rb") as f:
         config = tomllib.load(f)
 
     print(f'\n{"Genja command ":.<30} {args.command}')

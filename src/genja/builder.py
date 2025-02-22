@@ -1,4 +1,4 @@
-"""Builders module."""
+"""Module for build functions."""
 
 import json
 import markdown
@@ -12,9 +12,24 @@ from pathlib import Path
 
 
 def _build_posts(
-    config: dict[str, str], template: Template, md: markdown.Markdown
+    config: dict[str, str], template: Template, mdown: markdown.Markdown
 ) -> list[dict[str, str]]:
-    """Build HTML for posts."""
+    """Build HTML for Markdown files that are located in the _posts directory.
+
+    Parameters
+    ----------
+    config
+        Configuration settings from the config file.
+    template
+        Jinja template.
+    mdown
+        Markdown content.
+
+    Returns
+    -------
+    posts
+        List of dictionaries that contain post metadata.
+    """
     base_url = config["base_url"]
     site_output = config["site_output"]
     posts_output = config["posts_output"]
@@ -22,11 +37,11 @@ def _build_posts(
     # Store meta data dictionary for each post
     posts = []
 
-    for path in Path("posts").glob("**/*.md"):
+    for path in Path("_posts").glob("**/*.md"):
         # Get category, link, url, and post path
         category = path.parts[-2]
 
-        if category != "posts":
+        if category != "_posts":
             link = f"{posts_output}/{category}/{path.name}".replace("md", "html")
             url = f"{base_url}/{posts_output}/{category}/{path.name}".replace("md", "html")
             post_path = Path(f"{site_output}/{posts_output}/{category}/{path.name}")
@@ -39,12 +54,12 @@ def _build_posts(
         with path.open() as f:
             mdtext = f.read()
 
-        html = md.convert(mdtext)
+        html = mdown.convert(mdtext)
         soup = BeautifulSoup(html, "html.parser")
         html_str = json.dumps(str(soup.p) + f'<p><a href="{url}">Continue reading...</a></p>')
 
         # Get meta data from the Markdown file
-        meta = md.Meta  # pyright: ignore
+        meta = mdown.Meta  # pyright: ignore
         title = meta["title"][0]
         long_date = meta["date"][0]
         iso_date = datetime.strptime(meta["date"][0], "%B %d, %Y").isoformat() + "Z"
@@ -72,22 +87,32 @@ def _build_posts(
             f.write(post_html)
 
         # Reset the Markdown parser
-        md.reset()
+        mdown.reset()
 
     return posts
 
 
-def _build_pages(config: dict[str, str], template: Template, md: markdown.Markdown):
-    """Build HTML for pages."""
+def _build_pages(config: dict[str, str], template: Template, mdown: markdown.Markdown):
+    """Build HTML for Markdown files that are located in the _pages directory.
+
+    Parameters
+    ----------
+    config
+        Configuration settings from the config file.
+    template
+        Jinja template.
+    mdown
+        Markdown content.
+    """
     site_output = config["site_output"]
 
-    for path in Path("pages").glob("**/*.md"):
+    for path in Path("_pages").glob("**/*.md"):
         # Read text content of the Markdown file
         with path.open() as f:
             mdtext = f.read()
 
         # Convert Markdown content to HTML content
-        html = md.convert(mdtext)
+        html = mdown.convert(mdtext)
 
         # Create new HTML path for the page
         page_path = Path(f"{site_output}/{path.name}")
@@ -101,13 +126,25 @@ def _build_pages(config: dict[str, str], template: Template, md: markdown.Markdo
             f.write(page_html)
 
         # Reset the Markdown parser
-        md.reset()
+        mdown.reset()
 
 
 def _build_templates(
     config: dict[str, str], templates: list[Template], names: list[str], posts: list[dict[str, str]]
 ):
-    """Build HTML for certain templates."""
+    """Build HTML for certain templates located in the _templates directory.
+
+    Parameters
+    ----------
+    config
+        Configuration settings from the config file.
+    templates
+        List of Jinja templates.
+    names
+        List of names for the generated HTML pages.
+    posts
+        List of dictionaries that contain post metadata.
+    """
     site_output = config["site_output"]
 
     # Render the page templates and write to HTML files
@@ -120,7 +157,15 @@ def _build_templates(
 
 
 def _build_feed(config: dict[str, str], posts: list[dict[str, str]]):
-    """Build the JSON feed."""
+    """Build the JSON feed for the posts.
+
+    Parameters
+    ----------
+    config
+        Configuration settings from the config file.
+    posts
+        List of dictionaries that contain post metadata.
+    """
     base_url = config["base_url"]
     site_output = config["site_output"]
     title = config["title"]
@@ -147,11 +192,11 @@ def _build_feed(config: dict[str, str], posts: list[dict[str, str]]):
     for post in sorted_posts:
         content += f"""
         {{
-            "id": "{post['url']}",
-            "url": "{post['url']}",
-            "title": "{post['title']}",
-            "date_published": "{post['iso_date']}",
-            "content_html": {post['html']}
+            "id": "{post["url"]}",
+            "url": "{post["url"]}",
+            "title": "{post["title"]}",
+            "date_published": "{post["iso_date"]}",
+            "content_html": {post["html"]}
         }},"""
 
     json_feed = json_start + content[:-1] + json_end
@@ -162,12 +207,18 @@ def _build_feed(config: dict[str, str], posts: list[dict[str, str]]):
 
 
 def build_website(config: dict[str, str]):
-    """Build the website."""
+    """Build the website.
+
+    Parameters
+    ----------
+    config
+        Configuration settings from the config file.
+    """
     # Setup the Markdown converter
     md = markdown.Markdown(extensions=["meta", "fenced_code"])
 
     # Setup the jinja template environment
-    loader = FileSystemLoader("templates")
+    loader = FileSystemLoader("_templates")
     env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
 
     # Build the posts
@@ -175,7 +226,7 @@ def build_website(config: dict[str, str]):
     posts = _build_posts(config, post_template, md)
 
     # Build the pages if they exist
-    if Path("templates/page.html").exists() and Path("pages").exists():
+    if Path("_templates/page.html").exists() and Path("_pages").exists():
         page_template = env.get_template("page.html")
         _build_pages(config, page_template, md)
 
@@ -183,7 +234,7 @@ def build_website(config: dict[str, str]):
     page_names = []
     page_templates = []
 
-    for f in Path("templates").glob("*.html"):
+    for f in Path("_templates").glob("*.html"):
         if f.name != "post.html" and f.name != "page.html" and f.name != "base.html":
             page_template = env.get_template(f.name)
             page_templates.append(page_template)
