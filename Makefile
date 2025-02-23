@@ -28,9 +28,8 @@ docs:
 # https://packaging.python.org/en/latest/tutorials/packaging-projects/
 publish:
 	rm -rf dist
-	pip install --upgrade build twine
-	python -m build
-	twine upload dist/*
+	uv build
+	uv publish
 
 # Run unit tests using pytest
 .PHONY: tests
