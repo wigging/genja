@@ -86,7 +86,7 @@ An example of a post template is given below. The ``{{ content }}`` variable is 
    </body>
    </html>
 
-The keys available in the ``meta`` dictionary are ``title``, ``date``, ``category``, ``link``, ``url``, ``iso_date``, and ``html``. The keys are defined below. Use the ``meta['title']`` or ``meta.title`` syntax to get values from the meta dictionary in the template.
+The keys available in the ``meta`` dictionary are ``title``, ``date``, ``category``, ``tags``, ``link``, ``url``, ``iso_date``, and ``html``. The keys are defined below. Use the ``meta['title']`` or ``meta.title`` syntax to get values from the metadata dictionary in the template.
 
 title
    This is the title of the post.
@@ -94,6 +94,8 @@ date
    The long date of the post such as November 12, 2024.
 category
    The category of the post. The name of the category is determined by the location of the Markdown file in the posts directory. If the post is at the top-level of the posts directory then the category is just "posts", If the post resides in a sub-directory within the posts directory, then the category is the name of the sub-directory.
+tags
+   The tags of the post.
 link
    The relative link to the post's generated HTML file.
 url

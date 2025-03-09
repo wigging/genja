@@ -6,7 +6,12 @@ All notable changes to the genja project are documented in this file. The format
 
 #### Added
 
-- Tags from posts' metadata are passed to templates
+- Tags from the posts' metadata are passed to templates
+
+#### Changed
+
+- Use Python 3.13 and Ubuntu 24.04 for docs
+- Use uv to publish the package
 
 ## Genja v25.2
 
