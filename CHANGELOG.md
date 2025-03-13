@@ -2,6 +2,12 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v25.3.1
+
+#### Fixed
+
+- Make tags optional for posts to prevent build errors
+
 ## Genja v25.3
 
 #### Added

@@ -61,7 +61,7 @@ def _build_posts(
         # Get meta data from the Markdown file
         meta = mdown.Meta  # pyright: ignore
         title = meta["title"][0]
-        tags = meta["tags"][0]
+        tags = meta.get("tags", ["none"])[0]
         long_date = meta["date"][0]
         iso_date = datetime.strptime(meta["date"][0], "%B %d, %Y").isoformat() + "Z"
 
