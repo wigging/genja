@@ -1,9 +1,10 @@
 """Static site generator for GitHub Pages."""
 
 import argparse
-import tomllib
 import importlib.resources
 import shutil
+import textwrap
+import tomllib
 from importlib.metadata import version
 from pathlib import Path
 
@@ -84,10 +85,12 @@ def remove_files(config: dict[str, str]):
             subdir.rmdir()
 
     # Remove empty blog directory
-    if blog_path.exists():
+    if blog_path.exists() and blog_path.is_dir() and not any(blog_path.iterdir()):
         blog_path.rmdir()
 
-    print(f"\nRemoved generated HTML files and JSON feed file in `{output_path}` directory.")
+    print(textwrap.dedent(f"""
+    Removed generated HTML files in '{output_path}' directory.
+    Removed generated JSON feed file in '{output_path}' directory."""))
 
 
 def main():
