@@ -1,0 +1,7 @@
+# This configuration file is used by Genja to generate the website.
+# See https://github.com/wigging/genja for more info about Genja.
+
+base_url = "https://example.com"
+posts_output = "blog"
+site_output = "."
+title = "My Website"

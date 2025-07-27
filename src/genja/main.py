@@ -88,15 +88,13 @@ def remove_files(config: dict[str, str]):
     if blog_path.exists() and blog_path.is_dir() and not any(blog_path.iterdir()):
         blog_path.rmdir()
 
-    print(textwrap.dedent(f"""
-    Removed generated HTML files in '{output_path}' directory.
-    Removed generated JSON feed file in '{output_path}' directory."""))
+    print(f"\nRemoved generated HTML and JSON files in '{output_path}' directory.")
 
 
 def main():
     """Run the genja program."""
     # Command line arguments
-    parser = argparse.ArgumentParser(description="Genja static site generator for GitHub Pages")
+    parser = argparse.ArgumentParser(description="Genja static website generator.")
 
     choices = ["build", "serve", "clean", "new"]
     parser.add_argument("command", choices=choices, help="genja commands")

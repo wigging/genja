@@ -38,13 +38,13 @@ def _build_posts(
     posts = []
 
     for path in Path("_posts").glob("**/*.md"):
-        # Get category, link, url, and post path
-        category = path.parts[-2]
+        # Get sub directory, link, url, and post path
+        sub_dir = path.parts[-2]
 
-        if category != "_posts":
-            link = f"{posts_output}/{category}/{path.name}".replace("md", "html")
-            url = f"{base_url}/{posts_output}/{category}/{path.name}".replace("md", "html")
-            post_path = Path(f"{site_output}/{posts_output}/{category}/{path.name}")
+        if sub_dir != "_posts":
+            link = f"{posts_output}/{sub_dir}/{path.name}".replace("md", "html")
+            url = f"{base_url}/{posts_output}/{sub_dir}/{path.name}".replace("md", "html")
+            post_path = Path(f"{site_output}/{posts_output}/{sub_dir}/{path.name}")
         else:
             link = f"{posts_output}/{path.name}".replace("md", "html")
             url = f"{base_url}/{posts_output}/{path.name}".replace("md", "html")
@@ -61,7 +61,8 @@ def _build_posts(
         # Get meta data from the Markdown file
         meta = mdown.Meta  # pyright: ignore
         title = meta["title"][0]
-        tags = meta.get("tags", ["none"])[0]
+        categories = meta.get("categories", ["none"])[0].split(", ")
+        tags = meta.get("tags", ["none"])[0].split(", ")
         long_date = meta["date"][0]
         iso_date = datetime.strptime(meta["date"][0], "%B %d, %Y").isoformat() + "Z"
 
@@ -69,7 +70,7 @@ def _build_posts(
         meta_data = {
             "title": title,
             "date": long_date,
-            "category": category,
+            "categories": categories,
             "tags": tags,
             "link": link,
             "url": url,
