@@ -43,10 +43,8 @@ dev = [
     "sphinx>=8.2.1",
 ]
 
-[tool.pyright]
-pythonVersion = "3.13"
-venvPath = "."
-venv = ".venv"
+[tool.basedpyright]
+typeCheckingMode = "standard"
 
 [tool.ruff]
 line-length = 100

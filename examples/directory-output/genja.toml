@@ -1,0 +1,7 @@
+# Configuration file used by genja to generate this website.
+# See https://github.com/wigging/genja for more info about genja.
+
+base_url = "https://example.com"
+posts_output = "blog"
+site_output = "mysite"
+title = "My Website"
