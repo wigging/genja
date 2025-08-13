@@ -3,7 +3,6 @@
 import argparse
 import importlib.resources
 import shutil
-import textwrap
 import tomllib
 from importlib.metadata import version
 from pathlib import Path
@@ -69,26 +68,36 @@ def remove_files(config: dict[str, str]):
             html_files.append(x.name)
 
     # Remove the generated JSON feed file in the output directory
+    print("\nRemoving generated JSON feed file in output directory...")
     json_path = Path(output_path / "feed.json")
 
     if json_path.exists():
         json_path.unlink()
+        print("➔", json_path)
 
     # Remove the generated HTML files in the output directory
+    print("\nRemoving generated HTML files in output directory...")
+
     for html_path in output_path.glob("**/*.html"):
         if html_path.name in html_files and html_path.parent != templates_path:
             html_path.unlink()
+            print("➔", html_path)
 
     # Remove empty sub-directories
+    print("\nRemoving empty sub-directories...")
+
     for subdir in blog_path.glob("**/*"):
         if subdir.is_dir() and not any(subdir.iterdir()):
             subdir.rmdir()
+            print("➔", subdir)
 
     # Remove empty blog directory
+    print("\nRemoving empty posts directory...")
     if blog_path.exists() and blog_path.is_dir() and not any(blog_path.iterdir()):
         blog_path.rmdir()
+        print("➔", blog_path)
 
-    print(f"\nRemoved generated HTML and JSON files in '{output_path}' directory.")
+    print("\nRemoval of generated HTML and JSON files is complete.")
 
 
 def main():

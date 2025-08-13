@@ -248,4 +248,4 @@ def build_website(config: dict[str, str]):
     # Build the JSON feed
     _build_feed(config, posts)
 
-    print(f"\nBuilt website in `{config['site_output']}` directory.")
+    print(f"\nBuilt website in '{config['site_output']}' directory.")
