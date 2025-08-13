@@ -16,6 +16,8 @@ git clone https://github.com/wigging/genja.git
 uv sync
 ```
 
+Use the Makefile to easily check the code, run tests, and perform other commands.
+
 ## Code style, linting, and formatting
 
 All Python code in the Genja package should adhere to the [PEP 8](https://peps.python.org/pep-0008/) style guide. All linting and formatting should be implemented with [ruff](https://github.com/astral-sh/ruff). Configuration for ruff is defined in the **pyproject.toml** file.
