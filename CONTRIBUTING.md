@@ -6,7 +6,7 @@ The following is a set of guidelines for contributing to the Genja Python packag
 
 ## Development environment
 
-Clone this repository and use the [uv tool](https://docs.astral.sh/uv/) for Python and package management. The environment created by uv uses [ruff](https://docs.astral.sh/ruff/) for linting and formatting along with [pytest](https://docs.pytest.org) for running tests. Genja is installed in editable mode within the environment.
+Clone this repository and use [uv](https://docs.astral.sh/uv/) for Python and package management. The environment created by uv uses [ruff](https://docs.astral.sh/ruff/) for linting and formatting along with [pytest](https://docs.pytest.org) for running tests. Genja is installed in editable mode within the environment.
 
 ```bash
 # Clone this project
