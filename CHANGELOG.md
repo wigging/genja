@@ -2,6 +2,17 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v25.8
+
+#### Added
+
+- Categories from posts' metadata are passed to templates
+- Print removed files and sub-directories during clean command
+
+#### Changed
+
+- Sub-directories are no longer used as the post category
+
 ## Genja v25.3.1
 
 #### Fixed
