@@ -65,7 +65,7 @@ An example of a post template is given below. The ``{{ content }}`` variable is 
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
        <!-- Styles -->
-       <link rel="stylesheet" href="{% if meta.category != '_posts' %}../../{% else %}../{% endif %}styles.css">
+       <link rel="stylesheet" href="../styles.css">
 
        <title>My Website</title>
    </head>
@@ -86,16 +86,16 @@ An example of a post template is given below. The ``{{ content }}`` variable is 
    </body>
    </html>
 
-The keys available in the ``meta`` dictionary are ``title``, ``date``, ``category``, ``tags``, ``link``, ``url``, ``iso_date``, and ``html``. The keys are defined below. Use the ``meta['title']`` or ``meta.title`` syntax to get values from the metadata dictionary in the template.
+The keys available in the ``meta`` dictionary are ``title``, ``date``, ``categories``, ``tags``, ``link``, ``url``, ``iso_date``, and ``html``. The keys are defined below. Use the ``meta['title']`` or ``meta.title`` syntax to get values from the metadata dictionary in the template.
 
 title
    This is the title of the post.
 date
    The long date of the post such as November 12, 2024.
-category
-   The category of the post. The name of the category is determined by the location of the Markdown file in the posts directory. If the post is at the top-level of the posts directory then the category is just "posts", If the post resides in a sub-directory within the posts directory, then the category is the name of the sub-directory.
+categories
+   The category or categories of the post.
 tags
-   The tags of the post.
+   The tag or tags of the post.
 link
    The relative link to the post's generated HTML file.
 url
