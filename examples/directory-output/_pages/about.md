@@ -1,16 +1,4 @@
-# About Me
+# About
 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Hi, I’m Homer Simpson. By day, I dive into the world of coding—building projects, solving problems, and tinkering with new technologies. By weekend, you’ll probably find me on a hiking trail, enjoying fresh air and the occasional snack break. This site is my space to share what I’m learning, making, and exploring, both in front of a screen and out in nature.
 
-Below is an example of a function written in Python. Syntax highlighting is supported in the rendered HTML content.
-
-```python
-def sayhello():
-    """
-    Example function that prints a string.
-    """
-    s = 'Hello there'
-    print(s)
-```
-
-<p>HTML can be mixed in with the Markdown content. This paragraph is written in Markdown using an HTML paragraph tag.</p>

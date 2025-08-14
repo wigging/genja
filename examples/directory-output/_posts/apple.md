@@ -3,6 +3,5 @@ title: Apple
 date: November 19, 2020
 ---
 
-Apples are delicious! Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Apples are crisp, sweet (or tart) fruits that come in a rainbow of varieties, from bright red to golden yellow and fresh green. They’re enjoyed fresh, baked into pies, pressed into cider, or even dried for a chewy snack. Packed with fiber, vitamins, and antioxidants, apples have been a staple in diets around the world for centuries—proving that sometimes the simplest foods are the most timeless.
 
-![apple image](../img/apple.jpg)

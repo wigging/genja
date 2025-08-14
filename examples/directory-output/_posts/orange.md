@@ -1,6 +1,7 @@
 ---
-title: Oranges
+title: Orange
 date: December 22, 2023
 ---
 
-Oranges are delicious. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Oranges are juicy, citrus fruits known for their vibrant color and refreshing sweetness with a hint of tang. Rich in vitamin C and other antioxidants, they’re a delicious way to boost your immune system while brightening your day. Whether peeled and eaten fresh, squeezed into juice, or zested for flavor in cooking, oranges bring a burst of sunshine to kitchens and tables around the world.
+

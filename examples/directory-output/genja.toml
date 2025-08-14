@@ -1,5 +1,5 @@
-# Configuration file used by genja to generate this website.
-# See https://github.com/wigging/genja for more info about genja.
+# This configuration file is used by Genja to generate the website
+# See https://github.com/wigging/genja for more info about Genja
 
 base_url = "https://example.com"
 posts_output = "blog"
