@@ -50,6 +50,26 @@
         {% endfor %}
         </ul>
 
+        <h2>Posts organized by categories</h2>
+
+        <h4>Food</h4>
+        <ul>
+          {% for post in posts %}
+          {% if 'food' in post.categories %}
+          <li><a href="{{ post.link }}">{{ post.title }}</a></li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+
+        <h4>Tech</h4>
+        <ul>
+          {% for post in posts %}
+          {% if 'tech' in post.categories %}
+          <li><a href="{{ post.link }}">{{ post.title }}</a></li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+
         <h2>Posts organized by tags</h2>
 
         <h4>macOS</h4>

@@ -1,6 +1,7 @@
 ---
 title: Build a Mac App with Swift
 date: June 8, 2025
+categories: tech
 tags: macos, swift
 ---
 

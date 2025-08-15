@@ -1,6 +1,7 @@
 ---
 title: Shortcuts for macOS
 date: November 19, 2020
+categories: tech
 tags: macos
 ---
 

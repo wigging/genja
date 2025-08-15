@@ -1,6 +1,7 @@
 ---
 title: Linux Tips
 date: June 8, 2025
+categories: tech
 tags: linux
 ---
 

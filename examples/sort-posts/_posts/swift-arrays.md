@@ -1,6 +1,7 @@
 ---
 title: Arrays in Swift
 date: June 8, 2014
+categories: tech
 tags: swift
 ---
 
