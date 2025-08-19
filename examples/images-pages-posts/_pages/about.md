@@ -1,0 +1,6 @@
+# About
+
+Hi, I’m Homer Simpson. By day, I dive into the world of coding—building projects, solving problems, and tinkering with new technologies. By weekend, you’ll probably find me on a hiking trail, enjoying fresh air and the occasional snack break. This site is my space to share what I’m learning, making, and exploring, both in front of a screen and out in nature.
+
+![Homer Simpson](images/homer-simpson.jpg)
+
