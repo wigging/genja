@@ -1,132 +1,61 @@
 Examples
 ========
 
-Examples are available in the `genja <https://github.com/wigging/genja>`_ repository on GitHub. See the sections below for more information about each example.
-
-Building the examples
----------------------
-
-The examples are located in the **genja/examples** directory in the GitHub repository. Use the ``genja build`` or ``genja serve`` command to generate the HTML for a particular example. For instance, use the commands shown below to build the website and run a local server for the **directory-nocat** example. The example website will automatically reload in the web browser when changes are saved to the Markdown files.
+Examples are available in the **genja/examples** directory in the genja `GitHub <https://github.com/wigging/genja>`_ repository. Use the ``genja build`` or ``genja serve`` command to generate the HTML for a particular example. For instance, use the command shown below to build the website and run a local server for the **directory-output** example. The website will automatically reload in the web browser when changes are saved to the Markdown files.
 
 .. code:: text
 
-   cd examples/directory-nocat
+   cd examples/directory-output
    genja serve
 
-Use the commands shown below to build the example website without starting a local server.
+Alternatively, use the build command to build the website without starting a local server.
 
 .. code:: text
 
-   cd examples/directory-nocat
+   cd examples/directory-output
    genja build
 
-Directory output with no categories
------------------------------------
+Code blocks
+-----------
 
-The **directory-nocat** example uses the **mysite** directory for the generated HTML output. The Markdown files are located in the **_pages** and **_posts** directories. The Markdown files are not organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
+The code-blocks example demonstrates the use of `highlight.js <https://highlightjs.org>`_ to provide syntax coloring of code that is rendered in pages and posts.
+
+Directory output
+----------------
+
+The directory-output example defines ``site_output = "mysite"`` in the ``genja.toml`` file. This tells Genja to output the generated content to the ``mysite`` directory in the project.
 
 .. code:: text
 
-   directory-nocat/
-   ├── mysite/
-   │   ├── img/
-   │   └── styles.css
+   directory-output/
    ├── _pages/
-   │   ├── about.md
-   │   └── contact.md
    ├── _posts/
-   │   ├── apple.md
-   │   └── orange.md
    ├── _templates/
-   │   ├── index.html
-   │   ├── page.html
-   │   └── post.html
+   ├── mysite/      <-- output from Genja will go in this directory
    └── genja.toml
 
-Directory output with categories
---------------------------------
+HTML content
+------------
 
-The **directory-withcat** example uses the **mysite** directory for the generated HTML output. The Markdown files are located in the **_pages** and **_posts** directories. The Markdown files are organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
+The ``html-content`` example demonstrates putting HTML in the Markdown file.
 
-.. code:: text
+Image files
+-----------
 
-   directory-withcat/
-   ├── mysite/
-   │   ├── img/
-   │   └── styles.css
-   ├── _pages/
-   │   ├── about.md
-   │   └── contact.md
-   ├── _posts/
-   │   ├── fruits/
-   │   └── veggies/
-   ├── _templates/
-   │   ├── index.html
-   │   ├── page.html
-   │   └── post.html
-   └── genja.toml
+The ``image-files`` example shows how to embed images in the Markdown file.
 
-Top-level output with no categories
------------------------------------
+Pages and posts
+---------------
 
-The **toplevel-nocat** example uses the root directory for the generated HTML output. The Markdown files are located in the **_pages** and **_posts** directories. The Markdown files are not organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
+The ``pages-and-posts`` examples demonstrates creating pages and posts as Markdown files.
 
-.. code:: text
+Root output
+-----------
 
-   toplevel-nocat/
-   ├── img/
-   │   └── apple.jpg
-   ├── _pages/
-   │   ├── about.md
-   │   └── contact.md
-   ├── _posts/
-   │   ├── apple.md
-   │   └── orange.md
-   ├── _templates/
-   │   ├── index.html
-   │   ├── page.html
-   │   └── post.html
-   ├── genja.toml
-   └── styles.css
+The ``root-output`` example generates the HTML website content at the root level of the project.
 
-Top-level output with no pages
-------------------------------
+Sort posts
+----------
 
-The **toplevel-nopages** example uses the root directory for the generated HTML output. The Markdown files are located in the **_posts** directory, there is no **_pages** directory for this example. The Markdown files are not organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
+The ``sort-posts`` example sorts the posts.
 
-.. code:: text
-
-   toplevel-nopages/
-   ├── img/
-   │   └── apple.jpg
-   ├── _posts/
-   │   ├── apple.md
-   │   └── orange.md
-   ├── _templates/
-   │   ├── index.html
-   │   └── post.html
-   ├── genja.toml
-   └── styles.css
-
-Top-level output with categories
---------------------------------
-
-The **toplevel-withcat** example uses the root directory for the generated HTML output. The Markdown files are located in the **_pages** and **_posts** directories. The Markdown files are organized into categories using sub-directories. The **_templates** directory contains the Jinja templates.
-
-.. code:: text
-
-   toplevel-withcat/
-   ├── img/
-   │   └── apple.jpg
-   ├── _pages/
-   │   ├── about.md
-   │   └── contact.md
-   ├── _posts/
-   │   ├── fruits/
-   │   └── veggies/
-   ├── _templates/
-   │   ├── index.html
-   │   ├── page.html
-   │   └── post.html
-   ├── genja.toml
-   └── styles.css
