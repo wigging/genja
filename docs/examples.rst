@@ -54,25 +54,52 @@ The ``directory-output`` example defines ``site_output = "mysite"`` in the ``gen
 HTML content
 ------------
 
-The ``html-content`` example demonstrates putting HTML in the Markdown file.
+The ``html-content`` example demonstrates putting HTML in the Markdown file. The ``about.md`` in the example uses the ``<figure>`` element to display an image with a caption.
+
+.. code:: html
+
+   <figure>
+     <img src="images/homer-simpson.jpg" alt="Homer Simpson" />
+     <figcaption>An image of Homer Simpson is in this figure.</figcaption>
+   </figure>
+
+The same is done in the ``apple.md`` post but notice the path to the image file is adjusted for the post.
+
+.. code:: html
+
+   <figure>
+     <img src="../images/apple.jpg" alt="an apple" />
+     <figcaption>This is an image of an apple.</figcaption>
+   </figure>
 
 Image files
 -----------
 
-The ``image-files`` example shows how to embed images in the Markdown file.
+The ``image-files`` example shows how to embed images in the Markdown file. This is accomplished as shown below but notice the path to the image file may vary for pages and posts.
+
+.. code:: markdown
+
+   ![Homer Simpson](images/homer-simpson.jpg)
 
 Pages and posts
 ---------------
 
-The ``pages-and-posts`` examples demonstrates creating pages and posts as Markdown files.
+The ``pages-and-posts`` examples demonstrates creating pages and posts as Markdown files. Pages reside in the ``_pages`` directory while posts reside in the ``_posts`` directory.
 
 Root output
 -----------
 
-The ``root-output`` example generates the HTML website content at the root level of the project.
+The ``root-output`` example generates the HTML website content at the root level of the project. This is defined in the ``genja.toml`` config file by setting the ``site_output`` to the current working directory as shown below:
+
+.. code:: toml
+
+   base_url = "https://example.com"
+   posts_output = "blog"
+   site_output = "."
+   title = "My Website"
 
 Sort posts
 ----------
 
-The ``sort-posts`` example sorts the posts.
+The ``sort-posts`` example shows how to sort posts by date, category, or tag. A demonstration of sorting only recent posts is also given. This is accomplished with the Jinja template engine. See the `Template Designer Documentation <https://jinja.palletsprojects.com/en/stable/templates/>`_ for more information about creating Jinja templates.
 
