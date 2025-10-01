@@ -1,12 +1,12 @@
 Templates
 =========
 
-Genja uses `Jinja templates <https://jinja.palletsprojects.com>`_ to write Markdown content to HTML files. You can probably guess where the name "Genja" came from. All template files must go in a directory named **_templates**.
+Genja uses `Jinja templates <https://jinja.palletsprojects.com>`_ to write Markdown content to HTML files. You can probably guess where the name "Genja" came from. All template files must go in a directory named ``_templates``.
 
 Page template
 -------------
 
-The ``page.html`` template is used to render the Markdown files contained in the **_pages** directory. This template must be named ``page.html`` for Genja to recognize it. The page template is not needed if there are no pages (pages directory) for the project.
+The ``page.html`` template is used to render the Markdown files contained in the ``_pages`` directory. This template must be named ``page.html`` for Genja to recognize it. The page template is not needed if there are no pages (pages directory) for the project.
 
 An example of a page template is given below. The ``{{ content }}`` is where the content of the Markdown file is rendered. Unlike the post template discussed in the next section, the Markdown content is the only data provided to the page template.
 
@@ -42,7 +42,7 @@ An example of a page template is given below. The ``{{ content }}`` is where the
 Post template
 -------------
 
-The ``post.html`` template is used to render the Markdown files contained in the **_posts** directory. This template must be named ``post.html`` for Genja to identify it. The post template and posts directory are required by Genja.
+The ``post.html`` template is used to render the Markdown files contained in the ``_posts`` directory. This template must be named ``post.html`` for Genja to identify it. The post template and posts directory are required by Genja.
 
 An example of a post template is given below. The ``{{ content }}`` variable is where the content of the Markdown file is rendered. A ``meta`` dictionary that contains information about the post is also available in the template.
 
