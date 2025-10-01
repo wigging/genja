@@ -8,6 +8,7 @@ Welcome to Genja's documentation. Genja is a simple static website generator. It
    :caption: Contents:
 
    getstarted
+   markdown
    templates
    examples
    contributing

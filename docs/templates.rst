@@ -1,5 +1,5 @@
-Templates
-=========
+HTML templates
+==============
 
 Genja uses `Jinja templates <https://jinja.palletsprojects.com>`_ to write Markdown content to HTML files. You can probably guess where the name "Genja" came from. All template files must go in a directory named ``_templates``.
 
