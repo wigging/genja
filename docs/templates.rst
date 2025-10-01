@@ -89,13 +89,13 @@ An example of a post template is given below. The ``{{ content }}`` variable is 
 The keys available in the ``meta`` dictionary are ``title``, ``date``, ``categories``, ``tags``, ``link``, ``url``, ``iso_date``, and ``html``. The keys are defined below. Use the ``meta['title']`` or ``meta.title`` syntax to get values from the metadata dictionary in the template.
 
 title
-   This is the title of the post.
+   This is the title of the post defined in Markdown as ``title: The post title`` and is returned as a string in the template.
 date
-   The long date of the post such as November 12, 2024.
+   The long date of the post such as ``date: November 12, 2024`` returned as a string in the template.
 categories
-   The category or categories of the post.
+   The category or categories of the post as a list of strings. A single category defined in the Markdown as ``categories: fruit`` is a returned in the template as a list containing one string value. Multiple categories such as ``categories: fruit, veggie`` are returned as a list of several string values. Notice that each category must be separated by a comma followed by a space.
 tags
-   The tag or tags of the post.
+   The tag or tags of the post as a list of strings. This can be a single tag defined as ``tags: python`` or multiple tags defined as ``tags: python, swift``. Each tag must be separated by a comma followed by a space.
 link
    The relative link to the post's generated HTML file.
 url

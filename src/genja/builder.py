@@ -59,7 +59,9 @@ def _build_posts(
         html_str = json.dumps(str(soup.p) + f'<p><a href="{url}">Continue reading...</a></p>')
 
         # Get meta data from the Markdown file
-        meta = mdown.Meta  # pyright: ignore
+        # Notice that `meta = mdown.Meta` produces an Unknown type so use `getattr`
+        meta: dict[str, list[str]] = getattr(mdown, "Meta")
+
         title = meta["title"][0]
         categories = meta.get("categories", ["none"])[0].split(", ")
         tags = meta.get("tags", ["none"])[0].split(", ")
