@@ -32,19 +32,18 @@ genja = "genja.main:main"
 [project.optional-dependencies]
 docs = [
     "furo>=2024.8.6",
+    "myst-parser>=4.0.1",
     "sphinx>=8.2.1",
 ]
 
 [dependency-groups]
 dev = [
     "furo>=2024.8.6",
+    "myst-parser>=4.0.1",
     "pytest>=8.3.4",
     "ruff>=0.9.7",
     "sphinx>=8.2.1",
 ]
-
-[tool.basedpyright]
-typeCheckingMode = "standard"
 
 [tool.ruff]
 line-length = 100
