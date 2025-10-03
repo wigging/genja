@@ -26,10 +26,13 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_theme = "furo"
 
+html_title = "Genja"
+html_static_path = ["_static"]
+html_logo = "_static/logo200.png"
+
 html_theme_options = {
     "source_repository": "https://github.com/wigging/genja",
     "source_branch": "main",
     "source_directory": "docs/",
 }
 
-html_title = "Genja"
