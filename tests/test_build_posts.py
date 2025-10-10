@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 from textwrap import dedent
 
-import markdown
 import pytest
 from jinja2 import Template
 
@@ -18,6 +17,10 @@ def temp_posts_dir(tmp_path: Path):
     posts_dir.mkdir()
 
     post1 = posts_dir / "test-post-1.md"
+
+    subdir = posts_dir / "articles"
+    subdir.mkdir()
+    post2 = subdir / "test-post-2.md"
 
     content1 = dedent("""\
     ---
@@ -33,13 +36,6 @@ def temp_posts_dir(tmp_path: Path):
 
     Some content here.""")
 
-    post1.write_text(content1)
-
-    subdir = posts_dir / "articles"
-    subdir.mkdir()
-
-    post2 = subdir / "test-post-2.md"
-
     content2 = dedent("""\
     ---
     title: Test Post 2
@@ -48,19 +44,10 @@ def temp_posts_dir(tmp_path: Path):
 
     This is the second test post in a subdirectory.""")
 
+    post1.write_text(content1)
     post2.write_text(content2)
 
     return posts_dir
-
-
-@pytest.fixture
-def config(tmp_path: Path):
-    """Create a test configuration."""
-    return {
-        "base_url": "https://example.com",
-        "site_output": str(tmp_path / "_site"),
-        "posts_output": "posts",
-    }
 
 
 @pytest.fixture
@@ -70,12 +57,6 @@ def template():
     <html><head><title>{{ meta.title }}</title></head><body>{{ content }}</body></html>
     """).strip()
     return Template(template_str)
-
-
-@pytest.fixture
-def mdown():
-    """Create a Markdown converter with extensions."""
-    return markdown.Markdown(extensions=["meta", "fenced_code"])
 
 
 def test_build_posts_html_files(temp_posts_dir, config, template, mdown, monkeypatch):
