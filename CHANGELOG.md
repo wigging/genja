@@ -2,6 +2,17 @@
 
 All notable changes to the genja project are documented in this file. The format of this changelog is based on [Keep a Changelog](https://keepachangelog.com). This project adheres to [Calendar Versioning](https://calver.org) based on `YY.MM.MICRO`.
 
+## Genja v25.10
+
+#### Added
+
+- Tests for build functions in the builder module
+- A logo image for the documentation
+
+#### Changed
+
+- Use Markdown instead of reStructuredText for the Sphinx documentation
+
 ## Genja v25.9
 
 #### Added

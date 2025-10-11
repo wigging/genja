@@ -99,7 +99,7 @@ wheels = [
 
 [[package]]
 name = "genja"
-version = "25.9"
+version = "25.10"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
